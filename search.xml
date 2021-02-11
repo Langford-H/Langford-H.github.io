@@ -4,13 +4,42 @@
   
     
     <entry>
-      <title>Hello World</title>
-      <link href="2021/02/03/hello-world/"/>
-      <url>2021/02/03/hello-world/</url>
+      <title>Git与Github(1)</title>
+      <link href="2021/02/04/Git-and-Github/"/>
+      <url>2021/02/04/Git-and-Github/</url>
       
-        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+        <content type="html"><![CDATA[<h1 id="什么是Git，什么又是Github？"><a href="#什么是Git，什么又是Github？" class="headerlink" title="什么是Git，什么又是Github？"></a>什么是Git，什么又是Github？</h1><h2 id="先说Git"><a href="#先说Git" class="headerlink" title="先说Git"></a>先说Git</h2><p>与众人所熟知的githb不一样，git是一个<em>软件</em>，就如同你装在计算机里运行的所有其他软件一样，这是一个伟大的发明创造。</p><h3 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h3><p>git的创造者是Linus Benedict Torvalds， 林纳斯先生的另一伟大创造就是Linux系统，而我们的主角Git也与Linux有着很深的联系，Git是为Linux专门打造的版本控制器。<br>综上我们现在有两个问题，什么是版本控制器？为什么Linux需要这个玩意？<br>先来解决第一个文题：什么是版本控制器？<br>版本控制器统称VCS(version control system)顾名思义，它就是用来控制版本的。如果你有玩过单机版RPG游戏，那么你一定会懂，在每次面对强大的boss时，你首先需要做的就是存档，当boss战对自己不利，或是消耗太多时，为了避免死亡，你可以选择读档，从之前你的存档处开始，既避免了死亡的惩罚，又不用像之前一样解决小怪。<br>版本控制器就是文件版的存档，当你在自己的计算机上完成某一个项目时，你可以借助VSC来实现版本的储存迭代，它会记录下每一次的版本内容，提交时间，你可以选择从现在跳回(Git中成为回滚)之前你储存的<em>任何</em>一个版本。<br>要做到以上，通常我们会这么做</p>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+            <tag> Computer </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Git与Github(1)</title>
+      <link href="2021/02/04/%E6%B5%8B%E8%AF%95/"/>
+      <url>2021/02/04/%E6%B5%8B%E8%AF%95/</url>
+      
+        <content type="html"><![CDATA[<h1 id="什么是Git，什么又是Github？"><a href="#什么是Git，什么又是Github？" class="headerlink" title="什么是Git，什么又是Github？"></a>什么是Git，什么又是Github？</h1><h2 id="先说Git"><a href="#先说Git" class="headerlink" title="先说Git"></a>先说Git</h2><p>与众人所熟知的githb不一样，git是一个<em>软件</em>，就如同你装在计算机里运行的所有其他软件一样，这是一个伟大的发明创造。</p><h3 id="起源"><a href="#起源" class="headerlink" title="起源"></a>起源</h3><p>git的创造者是Linus Benedict Torvalds， 林纳斯先生的另一伟大创造就是Linux系统，而我们的主角Git也与Linux有着很深的联系，Git是为Linux专门打造的版本控制器。<br>综上我们现在有两个问题，什么是版本控制器？为什么Linux需要这个玩意？<br>先来解决第一个文题：什么是版本控制器？<br>版本控制器统称VCS(version control system)顾名思义，它就是用来控制版本的。如果你有玩过单机版RPG游戏，那么你一定会懂，在每次面对强大的boss时，你首先需要做的就是存档，当boss战对自己不利，或是消耗太多时，为了避免死亡，你可以选择读档，从之前你的存档处开始，既避免了死亡的惩罚，又不用像之前一样解决小怪。<br>版本控制器就是文件版的存档，当你在自己的计算机上完成某一个项目时，你可以借助VSC来实现版本的储存迭代，它会记录下每一次的版本内容，提交时间，你可以选择从现在跳回(Git中成为回滚)之前你储存的<em>任何</em>一个版本。<br>要做到以上，通常我们会这么做</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+            <tag> Computer </tag>
+            
+        </tags>
       
     </entry>
     
