@@ -4,33 +4,6 @@
   
     
     <entry>
-      <title>雅可比与坐标变换</title>
-      <link href="2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/"/>
-      <url>2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/</url>
-      
-        <content type="html"><![CDATA[<h1 id="雅可比矩阵与雅可比行列式"><a href="#雅可比矩阵与雅可比行列式" class="headerlink" title="雅可比矩阵与雅可比行列式"></a>雅可比矩阵与雅可比行列式</h1><p>本文着重探讨雅可比行列式以及雅可比矩阵在基础力学(张量分析)中的一些作用，以及作用的证明，方便之后的流体力学、连续介质力学等基础力学的推导(并不包括代数几何方面的内容)</p><h2 id="定义与概念"><a href="#定义与概念" class="headerlink" title="定义与概念"></a>定义与概念</h2><p>我们定义</p><script type="math/tex; mode=display">\mathcal{J} =\frac{\partial (x_1,x_2,x_3\cdots x_m)}{\partial (\xi _1,\xi_2,\xi_3\cdots \xi_n)}=\left[\begin{array}{ccc}    \frac{\partial x_1}{\partial \xi_1}&\cdots&\frac{\partial x_1}{\partial \xi_n}\\    \vdots &\ddots &\vdots \\    \frac{\partial x_m}{\partial \xi_1}&\cdots&\frac{\partial x_m}{\partial \xi_n}\end{array}\right]</script><p>上式中右侧矩阵称为雅可比矩阵，其中$x_i=x_i(\xi_1,\xi_2,\cdots,\xi_n)(i=1,2,3\cdots m)$解释为任意一个x都是关于$\xi$的函数。而雅可比矩阵的行列式就是雅可比行列式。在此处我举一个不太严谨的例子来帮助读者理解，我们都知道要表达一个一元函数在某一点处的线性逼近值，我们有它在这一点上的导数，而当我们将一元函数的概念扩大到n维空间向量函数向m维空间的另一个向量函数的映射时，它的导数就是我们的主角————雅可比矩阵。我们用具体的实例来阐释它。  </p><h2 id="雅可比矩阵在坐标变换中的使用"><a href="#雅可比矩阵在坐标变换中的使用" class="headerlink" title="雅可比矩阵在坐标变换中的使用"></a>雅可比矩阵在坐标变换中的使用</h2><p>雅可比矩阵在<strong>张量</strong>中最重要的作用就是坐标转化。取笛卡尔坐标系(记为$D$）下的一组基矢量$x^{k’}$将其记作$x^{1’},x^{2’},x^{3’}$，同时取任意坐标系(记为$K$)一组基矢量$x^i$，将其记为$x^1,x^2,x^3$，二者以角标上撇号区分，相对的每一个笛卡尔坐标基矢量都是零一坐标系下三个基矢量的函数，反之亦然，用公式表示为：</p><script type="math/tex; mode=display">x^{k'}=x^{k'}(x^1,x^2,x^3)=x^{i}</script><script type="math/tex; mode=display">x^{i}=x^i(x^{1'},x^{2'},x^{3'})=x^{k'}</script><p>当满足雅可比行列不为零时即：</p><script type="math/tex; mode=display">det(\frac{\partial x^{k'}}{\partial x^{i}})\neq0</script><script type="math/tex; mode=display">det(\frac{\partial x^{i}}{\partial x^{k'}})\neq0</script><p>就可以得到雅可比矩阵，并用来坐标转化。现有一向量在$D$下表达为$\overrightarrow{V}=(v_1’,v_2’,v_3’)=v_k’$，欲求得该向量在$K$下表示我们可以直接将其与雅可比矩阵相乘即</p><script type="math/tex; mode=display">v_i=[\frac{\partial x^{i}}{\partial x^{k'}}]\cdot v_k'</script><p>以上是两个三维坐标间的相互转化，拓展到任意维度之间的坐标转化，雅可比矩阵适用方法不变。</p><h2 id="雅可比行列式在n维空间中微元体积转化作用及其证明"><a href="#雅可比行列式在n维空间中微元体积转化作用及其证明" class="headerlink" title="雅可比行列式在n维空间中微元体积转化作用及其证明"></a>雅可比行列式在n维空间中微元体积转化作用及其证明</h2><p>再来看雅可比行列式的作用，我们现在推导n维空间中不同坐标系下的体积转化。<br>设我们在坐标系$A_1$中有基矢量$y_i$其中$(i=1,2,3\cdots n)$，而在坐标系$A_2$中有基矢量$x_j$其中$(j=1,2,3 \cdots n)$自然在坐标系$A_1$中就有单位体积元为$dy_1dy_2\cdots dy_n$那么该体积在坐标系$A_2$中到底是如何表示的呢？<br>根据上一节及全微分的推导我们有：</p><script type="math/tex; mode=display">dy_i=\frac{\partial y_i}{\partial x_j}\cdot dx_j</script><p>为了便于理解我们在此处取消爱因斯坦哑指标系数，将其以矩阵的形式展开：</p><script type="math/tex; mode=display">\left[\begin{array}{c}    dy_1\\    dy_2\\    \vdots\\    dy_n\end{array}\right]=\left[\begin{array}{c}    \frac{\partial y_1}{\partial x_1}dx_1+\frac{\partial y_1}{\partial x_2}dx_2+\cdots+\frac{\partial y_1}{\partial x_n}dx_n\\    \frac{\partial y_2}{\partial x_1}dx_1+\frac{\partial y_2}{\partial x_2}dx_2+\cdots+\frac{\partial y_2}{\partial x_n}dx_n\\    \vdots\\    \frac{\partial y_n}{\partial x_1}dx_1+\frac{\partial y_n}{\partial x_2}dx_2+\cdots+\frac{\partial y_n}{\partial x_n}dx_n\\\end{array}\right]</script><p>我们将上式右端的$dx_i$项单独提出为雅可比矩阵点乘列向量，再向左右两端同时右乘单位矩阵则有下式</p><script type="math/tex; mode=display">\left[    \begin{array}{cccc}    dy_1&0&\cdots &0\\    0&dy_2&\cdots &0\\    \vdots&\vdots&\ddots &\vdots\\    0&0&\cdots&dy_n    \end{array}\right]=\left[\begin{array}{cccc}    \frac{\partial y_1}{\partial x_1}&\frac{\partial y_1}{\partial x_2}&\cdots&\frac{\partial y_1}{\partial x_n}\\    \frac{\partial y_2}{\partial x_1}&\frac{\partial y_2}{\partial x_2}&\cdots&\frac{\partial y_2}{\partial x_n}\\    \vdots&\vdots&\ddots&\vdots\\    \frac{\partial y_n}{\partial x_1}&\frac{\partial y_n}{\partial x_2}&\cdots&\frac{\partial y_n}{\partial x_n}\\\end{array}\right]\cdot\left[    \begin{array}{ccccc}    dx_1&0&\cdots &0\\    0&dx_2&\cdots &0\\    \vdots&\vdots&\ddots &\vdots\\    0&0&\cdots&dx_n    \end{array}\right]</script><p>再将上式每一项取行列式则有：</p><script type="math/tex; mode=display">dy_1dy_2dy_3\cdots y_n=\|\frac{\partial y_i}{\partial x_j}\|dx_1dx_2dx_3\cdots dx_n</script><p>在这里笔者用$|\frac{\partial y_i}{\partial x_j}|$指代了雅可比行列式的绝对值。据此我们可以看到n维中两坐标系微元体积是由雅可比行列式相连接起来的。  </p><p><strong>注意</strong>这里的体积转化涉及两个问题，一是由于微元体积大小不存在负数，雅可比行列式必须要取绝对值，二是这里的转化不能再像雅可比矩阵中任意维度之间随意转化，而是必须在同一维度下转化。</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 线性代数 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 线性代数 </tag>
-            
-            <tag> 张量分析 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Git与Github(1)</title>
       <link href="2021/02/04/Git-and-Github/"/>
       <url>2021/02/04/Git-and-Github/</url>
