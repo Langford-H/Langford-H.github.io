@@ -20,31 +20,38 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Langford">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="写在之前鉴于本人微积分遗忘过多，这个就当作是微积分的重新复习，以及一些以前微积分学习过程中并没有注意到的基础知识，日积月累望有所突破。文本是基于重读参考文献[1]后的写作，其中有大量借鉴，总归来讲算是个人学习笔记，但基于本人个人情况做了一些调整，做到尽量将某一个简单的问题叙述明白，讲清楚。  三角函数基础弧度及角度问题弧度和角度都是用于描述一个角的大小的度量单位，类似于描述长度的单位有英寸厘米，二">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高等数学1">
+<meta property="og:url" content="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/index.html">
 <meta property="og:site_name" content="Langford">
-<meta property="og:description" content="物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com">
+<meta property="og:description" content="写在之前鉴于本人微积分遗忘过多，这个就当作是微积分的重新复习，以及一些以前微积分学习过程中并没有注意到的基础知识，日积月累望有所突破。文本是基于重读参考文献[1]后的写作，其中有大量借鉴，总归来讲算是个人学习笔记，但基于本人个人情况做了一些调整，做到尽量将某一个简单的问题叙述明白，讲清楚。  三角函数基础弧度及角度问题弧度和角度都是用于描述一个角的大小的度量单位，类似于描述长度的单位有英寸厘米，二">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/sec.png">
+<meta property="og:image" content="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/csc.svg">
+<meta property="og:image" content="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/hexagon.pdf">
+<meta property="og:image" content="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/sinproof.pdf">
+<meta property="article:published_time" content="2021-02-19T10:52:09.456Z">
+<meta property="article:modified_time" content="2021-02-21T06:26:52.545Z">
 <meta property="article:author" content="Langford Huang">
-<meta property="article:tag" content="dahuang">
+<meta property="article:tag" content="微积分">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/sec.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Langford</title>
+  <title>高等数学1 | Langford</title>
   
 
 
@@ -182,9 +189,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -200,10 +208,9 @@
       <meta itemprop="name" content="Langford">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/" class="post-title-link" itemprop="url">高等数学1</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          高等数学1
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -242,7 +249,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="写在之前"><a href="#写在之前" class="headerlink" title="写在之前"></a>写在之前</h1><p>鉴于本人微积分遗忘过多，这个就当作是微积分的重新复习，以及一些以前微积分学习过程中并没有注意到的基础知识，日积月累望有所突破。文本是基于重读参考文献[1]后的写作，其中有大量借鉴，总归来讲算是个人学习笔记，但基于本人个人情况做了一些调整，做到尽量将某一个简单的问题叙述明白，讲清楚。 </p>
+        <h1 id="写在之前"><a href="#写在之前" class="headerlink" title="写在之前"></a>写在之前</h1><p>鉴于本人微积分遗忘过多，这个就当作是微积分的重新复习，以及一些以前微积分学习过程中并没有注意到的基础知识，日积月累望有所突破。文本是基于重读参考文献[1]后的写作，其中有大量借鉴，总归来讲算是个人学习笔记，但基于本人个人情况做了一些调整，做到尽量将某一个简单的问题叙述明白，讲清楚。 </p>
 <h1 id="三角函数基础"><a href="#三角函数基础" class="headerlink" title="三角函数基础"></a>三角函数基础</h1><h2 id="弧度及角度问题"><a href="#弧度及角度问题" class="headerlink" title="弧度及角度问题"></a>弧度及角度问题</h2><p>弧度和角度<strong>都是</strong>用于描述一个角的大小的度量单位，类似于描述长度的单位有英寸厘米，二者从量纲角度来讲<strong>等价</strong>。</p>
 <h2 id="三角函数名称由来"><a href="#三角函数名称由来" class="headerlink" title="三角函数名称由来"></a>三角函数名称由来</h2><p>complementary 意为“互余”，故我们统共有6个三角函数，共四组：sin-cos，tan-cot，sec-csc。每一对函数之间有这样的关系</p>
 <script type="math/tex; mode=display">f(x)=co\quad f(\frac{\pi}{2}-x)</script><p>中文名中以“余”开头则是一组中的co函数（注：以上公式对co函数同样适用）<br>tan函数在$\frac{(2k+1)\pi}{2}\quad k\in Z$时无定义。上述中有两个三角函数sec csc较为陌生，$sec=\frac{1}{cos}$ $csc=\frac{1}{sin}$，与$sin-cos$这一对类似，$sec-csc$这一对形状相同，但一奇一偶，其中sec（中文名为正割）为偶函数，csc（中文名为余割）为奇函数，二者函数图像如下（图源来自Wikimedia）<br><img src="/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/sec.png" class title="sec函数图像，引自[2]"><br><img src="/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/csc.svg" class title="csc函数图像，引自[2]"><br>如图，二者分别在$\frac{(2k+1)\pi}{2}\quad k\in Z$以及$k\pi\quad k\in Z$上无定义。<br>在这里引述一张非常有趣的图片来解释六个三角函数间的关系：<br><img src="/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/hexagon.pdf" class title="六个三角函数间的关系，引自[3]"><br>在这个六边形中，对角线两个函数的乘积为1（互为倒数），对于每一个阴影三角形，三角形的上端两角的值的平方和等于三角形下端角的平方，而每一个函数都等于其顺时针两函数之比，同样的任意一点的函数都等于这个函数所在左右端点的乘积。</p>
@@ -265,99 +272,33 @@
 <script type="math/tex; mode=display">\lim_{h\to 0}f(x+h)=f(x)</script><p>综合之前连续性定义，有可导一定连续。</p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[1]《普林斯顿微积分读本》 Adrian Banner著 杨爽等译<br>[2]Wikimedia官网<a target="_blank" rel="noopener" href="https://commons.wikimedia.org/wiki/Main_Page">https://commons.wikimedia.org/wiki/Main_Page</a><br>[3]tikz模板官网<a target="_blank" rel="noopener" href="https://texample.net/media/tikz/examples/PDF/trigonometric-hexagon.pdf">https://texample.net/media/tikz/examples/PDF/trigonometric-hexagon.pdf</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/%E5%BE%AE%E7%A7%AF%E5%88%86/" rel="tag"># 微积分</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/04/Git-and-Github/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/earth.jpg">
-      <meta itemprop="name" content="Langford Huang">
-      <meta itemprop="description" content="物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Langford">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/02/04/Git-and-Github/" class="post-title-link" itemprop="url">Git与Github(1)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-02-04 16:03:23" itemprop="dateCreated datePublished" datetime="2021-02-04T16:03:23+08:00">2021-02-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-20 17:37:03" itemprop="dateModified" datetime="2021-02-20T17:37:03+08:00">2021-02-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="什么是Git，什么又是Github？"><a href="#什么是Git，什么又是Github？" class="headerlink" title="什么是Git，什么又是Github？"></a>什么是Git，什么又是Github？</h1><h2 id="先说Git"><a href="#先说Git" class="headerlink" title="先说Git"></a>先说Git</h2><p>与众人所熟知的githb不一样，git是一个<strong>软件</strong>，就如同你装在计算机里运行的所有其他软件一样，这是一个伟大的发明创造。</p>
-<h3 id="起源、定义"><a href="#起源、定义" class="headerlink" title="起源、定义"></a>起源、定义</h3><p>git的创造者是Linus Benedict Torvalds， 林纳斯先生的另一伟大创造就是Linux系统，而我们的主角Git也与Linux有着很深的联系，Git是为Linux专门打造的版本控制器。<br>综上我们现在有两个问题，什么是版本控制器？为什么Linux需要这个玩意？ </p>
-<h4 id="先来解决第一个文题：什么是版本控制器？"><a href="#先来解决第一个文题：什么是版本控制器？" class="headerlink" title="先来解决第一个文题：什么是版本控制器？"></a>先来解决第一个文题：什么是版本控制器？</h4><p>版本控制器统称VCS(version control system)顾名思义，它就是用来控制版本的。如果你有玩过单机版RPG游戏，那么你一定会懂，在每次面对强大的boss时，你首先需要做的就是存档，当boss战对自己不利，或是消耗太多时，为了避免死亡，你可以选择读档，从之前你的存档处开始，既避免了死亡的惩罚，又不用像之前一样解决小怪。<br>版本控制器就是文件版的存档，当你在自己的计算机上完成某一个项目时，你可以借助VCS来实现版本的储存迭代，它会记录下每一次的版本内容，提交时间，你可以选择从现在跳回(Git中成为回滚)之前你储存的<strong>任何</strong>一个版本。<br>要做到以上，通常我们会这么做<img src="/2021/02/04/Git-and-Github/example.png" class title="example"><br>这样会导致文件乱七八糟，如果起名不规则，还会导致文件错乱。但如果运用Git，文件夹中只会有一个文件，但却保存所有的文件版本。以上过程都在你自己的本地计算机中进行，叫做local VCS，Git当然能做到，但它做到的不仅于此。<br><img src="/2021/02/04/Git-and-Github/Lvcs.png" class title="Local vcs示意图，引自[3]">  </p>
-<h4 id="我们先解决第二个问题：为什么Linux需要Git？"><a href="#我们先解决第二个问题：为什么Linux需要Git？" class="headerlink" title="我们先解决第二个问题：为什么Linux需要Git？"></a>我们先解决第二个问题：为什么Linux需要Git？</h4><p>我在此对Linux不多作介绍，读者若对此没有概念，那请 <strong><em>一定</em></strong> 学习有关于它的相关资料，Linux是开源的操作系统，既然是开源的就会有杰出的程序员、黑客为它做出贡献，但是这就涉及到一个问题，我们该如何将这些代码片段合成来实现Linux的更新呢？原来的方法，是由林纳斯手动填补，但这样效率低下，重复劳动大，自2002年起，Linux开始使用Bitkeeper(一个商用软件)作为版本控制器，来实现版本更新，这是怎么实现的？我们借此机会介绍版本控制器的另外两种模式：Centralized VCS 和 Distributed VCS。<br>Centralize VCS由一个数据中心和多个开发者构成，所有的数据、文件等都存储且仅存储在数据中心中，开发者负责对数据中心中的文件进行创建debug等。这样的好处是管理数据中心者具有绝对的权限，他可以指定每一个开发者的权限，设定他能看到多少内容。但这样做却冒着巨大的风险，一旦数据中心遭到攻击或是出现系统故障，所有人的工作都有在一瞬间化泡影的风险。<img src="/2021/02/04/Git-and-Github/Cvcs.png" class title="Centralized vcs示意图，引自[3]">Distributed VCS填补了这样的问题。<br>它将原本的Local VCS与Centralized VCS相结合，它在每个人的计算机包括中心数据库上都建立了数据库，存放了自初始到最终版本中每一个文件版本，每个人都可以将自己的工作发布上传到中心数据库，看到文件更新的人都可以从数据中心下载保存在自己的计算机之中，在此基础上再做贡献。<br><img src="/2021/02/04/Git-and-Github/Dvcs.png" class title="Distributed vcs示意图，引自[3]">Git就是帮助我们实现这一切的软件，而我们使用Git上传到的数据中心，就是大名鼎鼎的Github。<br>回到那段历史，Bitkeeper一直为Linux提供服务，直到2005年，该公司与Linux社区一众黑客决裂，相传原因是有人尝试对Bitkeeper进行破解(就是把人家的正版软件盗版化。顺带一提，Bitkeeper一直无偿为Linux社区提供服务。)没办法，社区们的诸位以林纳斯先生为首，于2005年推出了Git，来帮助Linux进行版本更新，代码补充。今天，Git不再单单是Linux的专属软件，它为windows、Linux、Mac等系统提供 <strong><em>无偿的、开源的服务</em></strong>，Git一经推出迅速占领了VCS的市场，随着Github的面世，Git的用户数量再次获得了爆炸性的增长。2016年，原本作为商业软件的Bitkeeper，宣布对外开源。  </p>
-<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><p>[1]bitkeeper官网： <a target="_blank" rel="noopener" href="https://www.bitkeeper.org/">https://www.bitkeeper.org/</a><br>[2]Git官网：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com/</a><br>[3]<strong>Progit</strong> written by Scott Chacon and Ben Straub(该书可以免费在Git官网上下载，文中思维导图均引自此书)</p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/04/Git-and-Github/" rel="prev" title="Git与Github(1)">
+      <i class="fa fa-chevron-left"></i> Git与Github(1)
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -410,6 +351,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E4%B9%8B%E5%89%8D"><span class="nav-number">1.</span> <span class="nav-text">写在之前</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%80"><span class="nav-number">2.</span> <span class="nav-text">三角函数基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%A7%E5%BA%A6%E5%8F%8A%E8%A7%92%E5%BA%A6%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">弧度及角度问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%90%8D%E7%A7%B0%E7%94%B1%E6%9D%A5"><span class="nav-number">2.2.</span> <span class="nav-text">三角函数名称由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E8%A7%92%E5%87%BD%E6%95%B0%E5%AF%BC%E6%95%B0%E4%B8%8E%E7%9B%B8%E5%85%B3%E6%9E%81%E9%99%90"><span class="nav-number">2.3.</span> <span class="nav-text">三角函数导数与相关极限</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E6%9E%81%E9%99%90"><span class="nav-number">2.3.1.</span> <span class="nav-text">几个重要极限</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E6%80%A7%E4%B8%8E%E5%8F%AF%E5%AF%BC%E6%80%A7%E7%9A%84%E5%A4%87%E5%BF%98%E5%BD%95"><span class="nav-number">3.</span> <span class="nav-text">连续性与可导性的备忘录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E5%AF%BC%E6%95%B0%E7%9A%84%E8%A7%92%E5%BA%A6%E5%87%BA%E5%8F%91"><span class="nav-number">3.1.</span> <span class="nav-text">从导数的角度出发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E6%9D%A5%E6%80%9D%E8%80%83%E8%BF%9E%E7%BB%AD"><span class="nav-number">3.2.</span> <span class="nav-text">再来思考连续</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
