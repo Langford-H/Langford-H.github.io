@@ -22,7 +22,7 @@
 
   <meta name="description" content="什么是Git，什么又是Github？先说Git与众人所熟知的githb不一样，git是一个软件，就如同你装在计算机里运行的所有其他软件一样，这是一个伟大的发明创造。 起源、定义git的创造者是Linus Benedict Torvalds， 林纳斯先生的另一伟大创造就是Linux系统，而我们的主角Git也与Linux有着很深的联系，Git是为Linux专门打造的版本控制器。综上我们现在有两个问题，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git与Github(1)">
+<meta property="og:title" content="Git与Github(1 git与github简介)">
 <meta property="og:url" content="http://example.com/2021/02/04/Git-and-Github/index.html">
 <meta property="og:site_name" content="Langford">
 <meta property="og:description" content="什么是Git，什么又是Github？先说Git与众人所熟知的githb不一样，git是一个软件，就如同你装在计算机里运行的所有其他软件一样，这是一个伟大的发明创造。 起源、定义git的创造者是Linus Benedict Torvalds， 林纳斯先生的另一伟大创造就是Linux系统，而我们的主角Git也与Linux有着很深的联系，Git是为Linux专门打造的版本控制器。综上我们现在有两个问题，">
@@ -31,8 +31,9 @@
 <meta property="og:image" content="http://example.com/2021/02/04/Git-and-Github/Lvcs.png">
 <meta property="og:image" content="http://example.com/2021/02/04/Git-and-Github/Cvcs.png">
 <meta property="og:image" content="http://example.com/2021/02/04/Git-and-Github/Dvcs.png">
+<meta property="og:image" content="http://example.com/2021/02/04/Git-and-Github/fork.png">
 <meta property="article:published_time" content="2021-02-04T08:03:23.000Z">
-<meta property="article:modified_time" content="2021-02-20T09:37:03.872Z">
+<meta property="article:modified_time" content="2021-02-25T12:39:49.709Z">
 <meta property="article:author" content="Langford Huang">
 <meta property="article:tag" content="Git">
 <meta property="article:tag" content="Computer">
@@ -52,7 +53,7 @@
   };
 </script>
 
-  <title>Git与Github(1) | Langford</title>
+  <title>Git与Github(1 git与github简介) | Langford</title>
   
 
 
@@ -210,7 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Git与Github(1)
+          Git与Github(1 git与github简介)
         </h1>
 
         <div class="post-meta">
@@ -227,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-20 17:37:03" itemprop="dateModified" datetime="2021-02-20T17:37:03+08:00">2021-02-20</time>
+                <time title="修改时间：2021-02-25 20:39:49" itemprop="dateModified" datetime="2021-02-25T20:39:49+08:00">2021-02-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -254,7 +255,12 @@
 <h3 id="起源、定义"><a href="#起源、定义" class="headerlink" title="起源、定义"></a>起源、定义</h3><p>git的创造者是Linus Benedict Torvalds， 林纳斯先生的另一伟大创造就是Linux系统，而我们的主角Git也与Linux有着很深的联系，Git是为Linux专门打造的版本控制器。<br>综上我们现在有两个问题，什么是版本控制器？为什么Linux需要这个玩意？ </p>
 <h4 id="先来解决第一个文题：什么是版本控制器？"><a href="#先来解决第一个文题：什么是版本控制器？" class="headerlink" title="先来解决第一个文题：什么是版本控制器？"></a>先来解决第一个文题：什么是版本控制器？</h4><p>版本控制器统称VCS(version control system)顾名思义，它就是用来控制版本的。如果你有玩过单机版RPG游戏，那么你一定会懂，在每次面对强大的boss时，你首先需要做的就是存档，当boss战对自己不利，或是消耗太多时，为了避免死亡，你可以选择读档，从之前你的存档处开始，既避免了死亡的惩罚，又不用像之前一样解决小怪。<br>版本控制器就是文件版的存档，当你在自己的计算机上完成某一个项目时，你可以借助VCS来实现版本的储存迭代，它会记录下每一次的版本内容，提交时间，你可以选择从现在跳回(Git中成为回滚)之前你储存的<strong>任何</strong>一个版本。<br>要做到以上，通常我们会这么做<img src="/2021/02/04/Git-and-Github/example.png" class title="example"><br>这样会导致文件乱七八糟，如果起名不规则，还会导致文件错乱。但如果运用Git，文件夹中只会有一个文件，但却保存所有的文件版本。以上过程都在你自己的本地计算机中进行，叫做local VCS，Git当然能做到，但它做到的不仅于此。<br><img src="/2021/02/04/Git-and-Github/Lvcs.png" class title="Local vcs示意图，引自[3]">  </p>
 <h4 id="我们先解决第二个问题：为什么Linux需要Git？"><a href="#我们先解决第二个问题：为什么Linux需要Git？" class="headerlink" title="我们先解决第二个问题：为什么Linux需要Git？"></a>我们先解决第二个问题：为什么Linux需要Git？</h4><p>我在此对Linux不多作介绍，读者若对此没有概念，那请 <strong><em>一定</em></strong> 学习有关于它的相关资料，Linux是开源的操作系统，既然是开源的就会有杰出的程序员、黑客为它做出贡献，但是这就涉及到一个问题，我们该如何将这些代码片段合成来实现Linux的更新呢？原来的方法，是由林纳斯手动填补，但这样效率低下，重复劳动大，自2002年起，Linux开始使用Bitkeeper(一个商用软件)作为版本控制器，来实现版本更新，这是怎么实现的？我们借此机会介绍版本控制器的另外两种模式：Centralized VCS 和 Distributed VCS。<br>Centralize VCS由一个数据中心和多个开发者构成，所有的数据、文件等都存储且仅存储在数据中心中，开发者负责对数据中心中的文件进行创建debug等。这样的好处是管理数据中心者具有绝对的权限，他可以指定每一个开发者的权限，设定他能看到多少内容。但这样做却冒着巨大的风险，一旦数据中心遭到攻击或是出现系统故障，所有人的工作都有在一瞬间化泡影的风险。<img src="/2021/02/04/Git-and-Github/Cvcs.png" class title="Centralized vcs示意图，引自[3]">Distributed VCS填补了这样的问题。<br>它将原本的Local VCS与Centralized VCS相结合，它在每个人的计算机包括中心数据库上都建立了数据库，存放了自初始到最终版本中每一个文件版本，每个人都可以将自己的工作发布上传到中心数据库，看到文件更新的人都可以从数据中心下载保存在自己的计算机之中，在此基础上再做贡献。<br><img src="/2021/02/04/Git-and-Github/Dvcs.png" class title="Distributed vcs示意图，引自[3]">Git就是帮助我们实现这一切的软件，而我们使用Git上传到的数据中心，就是大名鼎鼎的Github。<br>回到那段历史，Bitkeeper一直为Linux提供服务，直到2005年，该公司与Linux社区一众黑客决裂，相传原因是有人尝试对Bitkeeper进行破解(就是把人家的正版软件盗版化。顺带一提，Bitkeeper一直无偿为Linux社区提供服务。)没办法，社区们的诸位以林纳斯先生为首，于2005年推出了Git，来帮助Linux进行版本更新，代码补充。今天，Git不再单单是Linux的专属软件，它为windows、Linux、Mac等系统提供 <strong><em>无偿的、开源的服务</em></strong>，Git一经推出迅速占领了VCS的市场，随着Github的面世，Git的用户数量再次获得了爆炸性的增长。2016年，原本作为商业软件的Bitkeeper，宣布对外开源。  </p>
-<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><p>[1]bitkeeper官网： <a target="_blank" rel="noopener" href="https://www.bitkeeper.org/">https://www.bitkeeper.org/</a><br>[2]Git官网：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com/</a><br>[3]<strong>Progit</strong> written by Scott Chacon and Ben Straub(该书可以免费在Git官网上下载，文中思维导图均引自此书)</p>
+<h1 id="再来看看Github"><a href="#再来看看Github" class="headerlink" title="再来看看Github"></a>再来看看Github</h1><p>就像我们之前提到过的，GitHub相对于Git而言是其数据中心，当然，基于git而开发的数据中心不止GitHub一个，比较知名的还有gitlab等。但是在所有为git提供服务的数据中心之中，github无疑是最大最成功的一个。截至2020年一月，GitHub已经拥有超过四千万的用户以及超过一亿九千万个代码仓库[4]，这个数字还在不断的累加增长，GitHub毫无疑问是世界上最大的代码社区。继承了开源运动的优秀思想，GitHub的大多数服务都是<strong><em>免费</em></strong>的，读者现在看到的这个网站也是基于GitHub的服务器搭建起来的。笔者在此解决一些有关于GitHub最经常被问到的问题。  </p>
+<h2 id="我们能用GitHub做什么？"><a href="#我们能用GitHub做什么？" class="headerlink" title="我们能用GitHub做什么？"></a>我们能用GitHub做什么？</h2><p>尽管已经讲了那么多，作为一个开发者/学生/教师/科研人员，我们到底能用它做些什么？<br>就像我们刚才讲的一样，GitHub最原始的目的就是作为git的网络仓库，储存、分发下载、上传的基地，我们可以将原本存储在自己电脑上的版本信息上传至GitHub防止丢失，同时也可以供全世界的人一同下载一起开发。基于此，笔者再此给出GitHub一些常用用法。</p>
+<h3 id="持续性的在不同的电脑终端上进行自己的工作"><a href="#持续性的在不同的电脑终端上进行自己的工作" class="headerlink" title="持续性的在不同的电脑终端上进行自己的工作"></a>持续性的在不同的电脑终端上进行自己的工作</h3><p>假设我们在写一个项目，项目并未完成，因为外界原因我们需要转移阵地，为了能在其他地方继续我们的工作，我们应该怎么做？通常做法是使用U盘将自己需要继续的工作拷贝下来，换台电脑继续。GitHub则提供了另一种方案，我们可以将半完成品上传到GitHub中，到了另一个地方，打开终端从GitHub中将自己的工作下载然后继续coding。  </p>
+<h3 id="创建小组工作"><a href="#创建小组工作" class="headerlink" title="创建小组工作"></a>创建小组工作</h3><p>在开始这一段之前我们必须弄明白GitHub中的角色分配问题，GitHub中有organization（组织）、team（团队）以及个体三种单位，要想团队协作开发一个项目，我们首先需要创建一个组织，一个组织之中可以有多个项目，多个团队，而具体到一个团队之中就会有不同的分工存在。<br>一个团队之中有三类成员：admin（管理员）、write（编写者）、read（游客）<br>这三者各自所拥有的权限不一样，其中admin（管理员）拥有最多的权限包括：给项目添加成员、从代码仓库中复制代码到本地、将本地代码上传到仓库、在线阅读代码，而编写者只拥有后三项，其不能给项目添加成员，游客只能阅读和下载，而不能进行提交合并代码。<br>读到这里你可能已经发现了，好像不论是谁都可以下载阅读你写的代码，而你也可以阅读下载别人的代码。是的，GitHub提供免费服务的前提条件之一就是你所做的项目，你所写的代码要符合开源协定，就是你的代码可以被任意阅读下载，而如果你需要一个私密项目，抱歉，GitHub是要<strong><em>收费</em></strong>的。同时GitHub在组织某些方面的服务（例如大规模的组织云存储空间）也是有付费要求的，详情如下<br></p>
+<h3 id="为开源事业添砖加瓦"><a href="#为开源事业添砖加瓦" class="headerlink" title="为开源事业添砖加瓦"></a>为开源事业添砖加瓦</h3><p>在GitHub上有众多全球范围内的开源合作项目，你可以选择加入，为其添砖加瓦，你所需要做的如下：<br><img src="/2021/02/04/Git-and-Github/fork.png" class><br>观察到每个开源项目的右上角都会有一个fork选项，选中后该仓库中的所有代码会自动移存到你的仓库中，你可以通过对你自己仓库中的版本进行修改添加（注意是对你自己的库中的版本，你是没有权限直接修改人家的东西的）修改完毕后，你可以选择向项目的原作者申请代码合并（pull request）简称PR，原作可以通过自己的github账号审阅你的代码，考虑是否将你的贡献添加入原来的代码中，一旦通过，你就是该项目的贡献者了。</p>
+<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><p>[1]bitkeeper官网： <a target="_blank" rel="noopener" href="https://www.bitkeeper.org/">https://www.bitkeeper.org/</a><br>[2]Git官网：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com/</a><br>[3]<strong>Progit</strong> written by Scott Chacon and Ben Straub(该书可以免费在Git官网上下载，文中思维导图均引自此书)<br>[4]<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/GitHub">https://en.wikipedia.org/wiki/GitHub</a></p>
 
     </div>
 
@@ -336,7 +342,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGit%EF%BC%8C%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AFGithub%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是Git，什么又是Github？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E8%AF%B4Git"><span class="nav-number">1.1.</span> <span class="nav-text">先说Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%B7%E6%BA%90%E3%80%81%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">起源、定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E6%9D%A5%E8%A7%A3%E5%86%B3%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%87%E9%A2%98%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8%EF%BC%9F"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">先来解决第一个文题：什么是版本控制器？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%85%88%E8%A7%A3%E5%86%B3%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88Linux%E9%9C%80%E8%A6%81Git%EF%BC%9F"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">我们先解决第二个问题：为什么Linux需要Git？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGit%EF%BC%8C%E4%BB%80%E4%B9%88%E5%8F%88%E6%98%AFGithub%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">什么是Git，什么又是Github？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%88%E8%AF%B4Git"><span class="nav-number">1.1.</span> <span class="nav-text">先说Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%B7%E6%BA%90%E3%80%81%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">起源、定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%88%E6%9D%A5%E8%A7%A3%E5%86%B3%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%96%87%E9%A2%98%EF%BC%9A%E4%BB%80%E4%B9%88%E6%98%AF%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E5%99%A8%EF%BC%9F"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">先来解决第一个文题：什么是版本控制器？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%85%88%E8%A7%A3%E5%86%B3%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E9%A2%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88Linux%E9%9C%80%E8%A6%81Git%EF%BC%9F"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">我们先解决第二个问题：为什么Linux需要Git？</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%8D%E6%9D%A5%E7%9C%8B%E7%9C%8BGithub"><span class="nav-number">2.</span> <span class="nav-text">再来看看Github</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E8%83%BD%E7%94%A8GitHub%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">我们能用GitHub做什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E7%BB%AD%E6%80%A7%E7%9A%84%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E7%94%B5%E8%84%91%E7%BB%88%E7%AB%AF%E4%B8%8A%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%B7%B1%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.1.</span> <span class="nav-text">持续性的在不同的电脑终端上进行自己的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B0%8F%E7%BB%84%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.1.2.</span> <span class="nav-text">创建小组工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%BC%80%E6%BA%90%E4%BA%8B%E4%B8%9A%E6%B7%BB%E7%A0%96%E5%8A%A0%E7%93%A6"><span class="nav-number">2.1.3.</span> <span class="nav-text">为开源事业添砖加瓦</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
