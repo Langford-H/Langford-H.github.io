@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>SICP2020(1)</title>
+      <link href="2021/03/11/SICP2020-1/"/>
+      <url>2021/03/11/SICP2020-1/</url>
+      
+        <content type="html"><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>加州伯克利大学自2011年起启用了python作为CS61a这一课程的主要编程语言，课程内容也与之前相比有了不少变化（主题内容以及中心思想并无改变），更重要的是课程资源有了极大的丰富，而网络上很少有中文版本的对相应资源的使用指导，这让我在开始学习时也遇到了不少问题；而CS61a作为编程开山课程，做到了让高中生也可以学习本课程，但是让他们克服如此障碍有些困难，于是我决定将一些问题总结汇总，希望能够帮助低年龄段的中文母语的编程学习者。</p><h1 id="在终端中操作样例的常见错误"><a href="#在终端中操作样例的常见错误" class="headerlink" title="在终端中操作样例的常见错误"></a>在终端中操作样例的常见错误</h1><p>在伯克利大学2020年春季的SICP版本中，课后的script并没有仔细说明在终端中操作python的具体步骤，导致如果没有看课堂视频的同学们迟迟无法进行操作，现将其归结如下：<br>凡是看到代码第一行中出现<code>&gt;&gt;&gt;</code>代表了该代码是在终端中运行的，请windows的同学启用git bash并在其中输入python，使得其转入python并显示<code>&gt;&gt;&gt;</code>而不是原来的<code>~$</code><br><img src="/2021/03/11/SICP2020-1/py.png" class><br>大家看到的script中的换行好像在git bash中很难实现，其实只要正确的输入相应的指令，例如</p><pre><code>&gt;&gt;&gt;from opeartor import mul&gt;&gt;&gt;def square(x):       return mul(x, x) </code></pre><p>但如果你正确输入了相关指令，再摁下回车键后，你会发现git bash中出现的不是<code>&gt;&gt;&gt;</code>，而是<code>...</code>，如下图：<br><img src="/2021/03/11/SICP2020-1/py1.png" class><br>现在我们再来回看几个在开始编写程序时容易出现的问题：<br>1.注意是<code>def</code>不是<code>define</code>!!!与我们在编写<code>scheme</code>时是完全不一样的。<br>2.注意<code>def</code>后要加<code>:</code>，且一定是英文的。<br>3.注意缩进，python因为没有像scheme中的括号以及c或c++中的<code>;</code>所以它的各种语句辨识都靠缩进，一般来讲一个函数在跳入下一级定义时需要缩进，也就是常说的<code>Tab</code>键，是四个空格。  </p><h1 id="SICP提交作业方法"><a href="#SICP提交作业方法" class="headerlink" title="SICP提交作业方法"></a>SICP提交作业方法</h1><p>python版SICP最大的改进就是它的自动审批作业系统，我们在CS61a官网上按照课程表下载相应的lab与hw文件，不用联网就可以自动检测自己的作业以及lab是否正确，该系统叫做<code>ok</code>。现在介绍windows系统下的<code>ok</code>系统的具体使用方法。<br>请在电脑中预先安装<code>Git</code>，有关<code>Git</code>的介绍在另一篇博客上。在安装选项时除了图示选项<br><img src="/2021/03/11/SICP2020-1/py2.png" class title="引自CS61a 2020spring Lab00"><br>其余选项都可以使用默认。</p><h2 id="hw的批改方法"><a href="#hw的批改方法" class="headerlink" title="hw的批改方法"></a>hw的批改方法</h2><p>每一次的hw作业都会在课程网站上有一个相应的压缩文件可供下载，建议建立一个属于CS61a的文件夹方便管理。在相应网站上都会有一行相应的命令用于作业检查（忽略作业提交指令，只有拥有伯克利大学账号的同学才可以提交）我们以hw01为例，如图<br>进入课程主页找到hw01<br><img src="/2021/03/11/SICP2020-1/py3.png" class title="来自&lt;https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs61a&#x2F;sp20&#x2F;&gt;"><br>进入后可以下载相应压缩文件并解压<br><img src="/2021/03/11/SICP2020-1/py4.png" class title="来自&lt;https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs61a&#x2F;sp20&#x2F;&gt;"><br>文件中包含我们的作业代码（忽略其他，只关注我们的作业代码即可），运用编辑器打开作业代码并根据网站上的作业要求完成作业，此时我们回到网站，我们会发现在每一道题的后面都会有检查指令，可是该检查指令该怎样使用呢？<br><img src="/2021/03/11/SICP2020-1/py5.png" class title="来自&lt;https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs61a&#x2F;sp20&#x2F;&gt;"><br>回到我们储存作业的文件夹，鼠标右键，你会发现选项中多了<code>Git Bash here</code>这个选项（<strong><em>注意！！！一定是要在该文件夹内部鼠标右键！！！</em></strong>）<br><img src="/2021/03/11/SICP2020-1/py6.png" class><br>我们使用从网站上拷贝下来的指令后加<code>--local</code>输入进git bash中就会启动<code>ok</code>程序对我们写的代码进行批改。注意，在命令的最后添加local的意思是将所写代码仅在本地进行校验，而不将其上传，如果忘记添加则系统会要求输入邮箱，十分麻烦。<br><img src="/2021/03/11/SICP2020-1/py7.png" class><br>而如果错误系统也会显示相应的错误类型，方便纠错。</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>提交相应某一问题时只需要在相应位置打开git bash输入指令<code>python ok -q &lt;name&gt; --local</code>其中<code>&lt;&gt;</code>中的内容需要在课程网站上查询，或者在代码中查看，每一道题都有相应的名称，如果想要一次性全部验证只需要输入<code>python ok</code>即可（由于python版本的差别，该指令的第一个单词可以是<code>python python3 py</code>此项依据python版本而定）</p><h2 id="lab的批改方法"><a href="#lab的批改方法" class="headerlink" title="lab的批改方法"></a>lab的批改方法</h2><p>lab共分为两个部分，课堂部分以及课下练习，其中课下联系的部分与hw相同，需要首先在lab中下载压缩文件，打开压缩文件中的lab01.py（借用第一次实验为例）根据注释中的相关要求，完成代码，并借助代码中的题目名称进行ok校验即可。<br>lab线上课程的操作方法则较为简单在相应的文件夹中git bash here，根据网站上直接输入网站上的指令就可以开始答题<br><img src="/2021/03/11/SICP2020-1/py8.png" class><br><img src="/2021/03/11/SICP2020-1/py9.png" class><br>在<code>?</code>处输入相应的答案即可。</p><h1 id="纯函数以及非纯函数"><a href="#纯函数以及非纯函数" class="headerlink" title="纯函数以及非纯函数"></a>纯函数以及非纯函数</h1><h2 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h2><p>在python终端中调用<code>abs</code>函数</p><pre><code>&gt;&gt;&gt; abs(-2)2</code></pre><p>我们说<code>abs</code>是一纯函数，它有一个input返回一个output，只要input相等，output一定是相等的。</p><h2 id="非纯函数"><a href="#非纯函数" class="headerlink" title="非纯函数"></a>非纯函数</h2><p>python中的函数<code>print</code>是一个典型的非纯函数，我们在终端输入</p><pre><code>&gt;&gt;&gt; print(1,2,3)1 2 3</code></pre><p>你可能会开始纳闷，只要输入<code>1,2,3</code>它返回的不应该都是相同的结果吗？为什么它不是纯函数呢？想到这里可以说明你已经掌握了纯函数的奥义了，但请不要急，接着往下看。<br>请尝试以下输入</p><pre><code>&gt;&gt;&gt;print(print(1),print(2))12None None</code></pre><p>你会发现，结果与你预想之中的不一样，多了两个<code>None</code>，我们现在来揭晓答案，<code>print</code>函数不论接收<strong><em>任何输入</em></strong>，其返回值都是<code>None</code>，该值在python中表示无，没有。而你的屏幕上显示的东西是<code>print</code>函数的功能：即在屏幕上打印出所输入的值。<strong>但是请十二万分的注意</strong>，它只是把东西打印在了屏幕上，其本身什么数值都没有返还！所以它是一个彻头彻尾的非纯函数。<br>上述例子中，括号内第二个和第三个<code>print</code>只是老老实实地把你交给它的数字打了出来而已，而第一个<code>print</code>也只是老老实实的把收到的两个<code>print</code>返回的<code>None</code>打印了出来而已。<br>我们再来看一个例子</p><pre><code>&gt;&gt;&gt;two = print(2)2&gt;&gt;&gt;print(two)None %有些人会报错</code></pre><p>第一个式子中<code>print</code>接收到2，于是老老实实的把2打印了出来，而第二个例子中因为two没有给<code>print</code>赋予任何的数值，<code>print</code>会返回<code>None</code>，而新版python的interpreter会把<code>two</code>当成没有定义的函数，从而报错。</p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>本文基于加州伯克利大学CS61a2020年春季公开资料写成，目的在于帮助他人更好的使用相关资源，以上仅为本人经验总结及学习回顾，详细资料请自行访问加州伯克利大学CS61a课程官网<a href="https://inst.eecs.berkeley.edu/~cs61a/archives.html">https://inst.eecs.berkeley.edu/~cs61a/archives.html</a>，如果对<code>ok</code>有什么问题请查阅<a href="https://cal-cs-61a-staff.github.io/ok-help/">https://cal-cs-61a-staff.github.io/ok-help/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Computer </tag>
+            
+            <tag> Founctional Programming </tag>
+            
+            <tag> SICP </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SICP1</title>
       <link href="2021/03/01/SICP1/"/>
       <url>2021/03/01/SICP1/</url>
@@ -24,9 +55,9 @@
             
             <tag> Founctional Programming </tag>
             
-            <tag> SICP </tag>
-            
             <tag> Scheme </tag>
+            
+            <tag> SICP </tag>
             
         </tags>
       

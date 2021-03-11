@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/aphysics_128px.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/physics_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/physics_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="摘要加州伯克利大学自2011年起启用了python作为CS61a这一课程的主要编程语言，课程内容也与之前相比有了不少变化（主题内容以及中心思想并无改变），更重要的是课程资源有了极大的丰富，而网络上很少有中文版本的对相应资源的使用指导，这让我在开始学习时也遇到了不少问题；而CS61a作为编程开山课程，做到了让高中生也可以学习本课程，但是让他们克服如此障碍有些困难，于是我决定将一些问题总结汇总，希望能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SICP2020(1)">
+<meta property="og:url" content="http://example.com/2021/03/11/SICP2020-1/index.html">
+<meta property="og:site_name" content="Langford">
+<meta property="og:description" content="摘要加州伯克利大学自2011年起启用了python作为CS61a这一课程的主要编程语言，课程内容也与之前相比有了不少变化（主题内容以及中心思想并无改变），更重要的是课程资源有了极大的丰富，而网络上很少有中文版本的对相应资源的使用指导，这让我在开始学习时也遇到了不少问题；而CS61a作为编程开山课程，做到了让高中生也可以学习本课程，但是让他们克服如此障碍有些困难，于是我决定将一些问题总结汇总，希望能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py1.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py2.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py3.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py4.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py5.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py6.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py7.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py8.png">
+<meta property="og:image" content="http://example.com/2021/03/11/SICP2020-1/py9.png">
+<meta property="article:published_time" content="2021-03-11T08:07:48.000Z">
+<meta property="article:modified_time" content="2021-03-11T08:07:48.135Z">
+<meta property="article:author" content="Langford Huang">
+<meta property="article:tag" content="Computer">
+<meta property="article:tag" content="Founctional Programming">
+<meta property="article:tag" content="SICP">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/11/SICP2020-1/py.png">
+
+<link rel="canonical" href="http://example.com/2021/03/11/SICP2020-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>SICP2020(1) | Langford</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Langford</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">dahung</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/11/SICP2020-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/earth.jpg">
+      <meta itemprop="name" content="Langford Huang">
+      <meta itemprop="description" content="物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Langford">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SICP2020(1)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-11 16:07:48" itemprop="dateCreated datePublished" datetime="2021-03-11T16:07:48+08:00">2021-03-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>加州伯克利大学自2011年起启用了python作为CS61a这一课程的主要编程语言，课程内容也与之前相比有了不少变化（主题内容以及中心思想并无改变），更重要的是课程资源有了极大的丰富，而网络上很少有中文版本的对相应资源的使用指导，这让我在开始学习时也遇到了不少问题；而CS61a作为编程开山课程，做到了让高中生也可以学习本课程，但是让他们克服如此障碍有些困难，于是我决定将一些问题总结汇总，希望能够帮助低年龄段的中文母语的编程学习者。</p>
+<h1 id="在终端中操作样例的常见错误"><a href="#在终端中操作样例的常见错误" class="headerlink" title="在终端中操作样例的常见错误"></a>在终端中操作样例的常见错误</h1><p>在伯克利大学2020年春季的SICP版本中，课后的script并没有仔细说明在终端中操作python的具体步骤，导致如果没有看课堂视频的同学们迟迟无法进行操作，现将其归结如下：<br>凡是看到代码第一行中出现<code>&gt;&gt;&gt;</code>代表了该代码是在终端中运行的，请windows的同学启用git bash并在其中输入python，使得其转入python并显示<code>&gt;&gt;&gt;</code>而不是原来的<code>~$</code><br><img src="/2021/03/11/SICP2020-1/py.png" class><br>大家看到的script中的换行好像在git bash中很难实现，其实只要正确的输入相应的指令，例如</p>
+<pre><code>&gt;&gt;&gt;from opeartor import mul
+&gt;&gt;&gt;def square(x):
+       return mul(x, x) 
+</code></pre><p>但如果你正确输入了相关指令，再摁下回车键后，你会发现git bash中出现的不是<code>&gt;&gt;&gt;</code>，而是<code>...</code>，如下图：<br><img src="/2021/03/11/SICP2020-1/py1.png" class><br>现在我们再来回看几个在开始编写程序时容易出现的问题：<br>1.注意是<code>def</code>不是<code>define</code>!!!与我们在编写<code>scheme</code>时是完全不一样的。<br>2.注意<code>def</code>后要加<code>:</code>，且一定是英文的。<br>3.注意缩进，python因为没有像scheme中的括号以及c或c++中的<code>;</code>所以它的各种语句辨识都靠缩进，一般来讲一个函数在跳入下一级定义时需要缩进，也就是常说的<code>Tab</code>键，是四个空格。  </p>
+<h1 id="SICP提交作业方法"><a href="#SICP提交作业方法" class="headerlink" title="SICP提交作业方法"></a>SICP提交作业方法</h1><p>python版SICP最大的改进就是它的自动审批作业系统，我们在CS61a官网上按照课程表下载相应的lab与hw文件，不用联网就可以自动检测自己的作业以及lab是否正确，该系统叫做<code>ok</code>。现在介绍windows系统下的<code>ok</code>系统的具体使用方法。<br>请在电脑中预先安装<code>Git</code>，有关<code>Git</code>的介绍在另一篇博客上。在安装选项时除了图示选项<br><img src="/2021/03/11/SICP2020-1/py2.png" class title="引自CS61a 2020spring Lab00"><br>其余选项都可以使用默认。</p>
+<h2 id="hw的批改方法"><a href="#hw的批改方法" class="headerlink" title="hw的批改方法"></a>hw的批改方法</h2><p>每一次的hw作业都会在课程网站上有一个相应的压缩文件可供下载，建议建立一个属于CS61a的文件夹方便管理。在相应网站上都会有一行相应的命令用于作业检查（忽略作业提交指令，只有拥有伯克利大学账号的同学才可以提交）我们以hw01为例，如图<br>进入课程主页找到hw01<br><img src="/2021/03/11/SICP2020-1/py3.png" class title="来自&lt;https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs61a&#x2F;sp20&#x2F;&gt;"><br>进入后可以下载相应压缩文件并解压<br><img src="/2021/03/11/SICP2020-1/py4.png" class title="来自&lt;https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs61a&#x2F;sp20&#x2F;&gt;"><br>文件中包含我们的作业代码（忽略其他，只关注我们的作业代码即可），运用编辑器打开作业代码并根据网站上的作业要求完成作业，此时我们回到网站，我们会发现在每一道题的后面都会有检查指令，可是该检查指令该怎样使用呢？<br><img src="/2021/03/11/SICP2020-1/py5.png" class title="来自&lt;https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs61a&#x2F;sp20&#x2F;&gt;"><br>回到我们储存作业的文件夹，鼠标右键，你会发现选项中多了<code>Git Bash here</code>这个选项（<strong><em>注意！！！一定是要在该文件夹内部鼠标右键！！！</em></strong>）<br><img src="/2021/03/11/SICP2020-1/py6.png" class><br>我们使用从网站上拷贝下来的指令后加<code>--local</code>输入进git bash中就会启动<code>ok</code>程序对我们写的代码进行批改。注意，在命令的最后添加local的意思是将所写代码仅在本地进行校验，而不将其上传，如果忘记添加则系统会要求输入邮箱，十分麻烦。<br><img src="/2021/03/11/SICP2020-1/py7.png" class><br>而如果错误系统也会显示相应的错误类型，方便纠错。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>提交相应某一问题时只需要在相应位置打开git bash输入指令<code>python ok -q &lt;name&gt; --local</code>其中<code>&lt;&gt;</code>中的内容需要在课程网站上查询，或者在代码中查看，每一道题都有相应的名称，如果想要一次性全部验证只需要输入<code>python ok</code>即可（由于python版本的差别，该指令的第一个单词可以是<code>python python3 py</code>此项依据python版本而定）</p>
+<h2 id="lab的批改方法"><a href="#lab的批改方法" class="headerlink" title="lab的批改方法"></a>lab的批改方法</h2><p>lab共分为两个部分，课堂部分以及课下练习，其中课下联系的部分与hw相同，需要首先在lab中下载压缩文件，打开压缩文件中的lab01.py（借用第一次实验为例）根据注释中的相关要求，完成代码，并借助代码中的题目名称进行ok校验即可。<br>lab线上课程的操作方法则较为简单在相应的文件夹中git bash here，根据网站上直接输入网站上的指令就可以开始答题<br><img src="/2021/03/11/SICP2020-1/py8.png" class><br><img src="/2021/03/11/SICP2020-1/py9.png" class><br>在<code>?</code>处输入相应的答案即可。</p>
+<h1 id="纯函数以及非纯函数"><a href="#纯函数以及非纯函数" class="headerlink" title="纯函数以及非纯函数"></a>纯函数以及非纯函数</h1><h2 id="纯函数"><a href="#纯函数" class="headerlink" title="纯函数"></a>纯函数</h2><p>在python终端中调用<code>abs</code>函数</p>
+<pre><code>&gt;&gt;&gt; abs(-2)
+2
+</code></pre><p>我们说<code>abs</code>是一纯函数，它有一个input返回一个output，只要input相等，output一定是相等的。</p>
+<h2 id="非纯函数"><a href="#非纯函数" class="headerlink" title="非纯函数"></a>非纯函数</h2><p>python中的函数<code>print</code>是一个典型的非纯函数，我们在终端输入</p>
+<pre><code>&gt;&gt;&gt; print(1,2,3)
+1 2 3
+</code></pre><p>你可能会开始纳闷，只要输入<code>1,2,3</code>它返回的不应该都是相同的结果吗？为什么它不是纯函数呢？想到这里可以说明你已经掌握了纯函数的奥义了，但请不要急，接着往下看。<br>请尝试以下输入</p>
+<pre><code>&gt;&gt;&gt;print(print(1),print(2))
+1
+2
+None None
+</code></pre><p>你会发现，结果与你预想之中的不一样，多了两个<code>None</code>，我们现在来揭晓答案，<code>print</code>函数不论接收<strong><em>任何输入</em></strong>，其返回值都是<code>None</code>，该值在python中表示无，没有。而你的屏幕上显示的东西是<code>print</code>函数的功能：即在屏幕上打印出所输入的值。<strong>但是请十二万分的注意</strong>，它只是把东西打印在了屏幕上，其本身什么数值都没有返还！所以它是一个彻头彻尾的非纯函数。<br>上述例子中，括号内第二个和第三个<code>print</code>只是老老实实地把你交给它的数字打了出来而已，而第一个<code>print</code>也只是老老实实的把收到的两个<code>print</code>返回的<code>None</code>打印了出来而已。<br>我们再来看一个例子</p>
+<pre><code>&gt;&gt;&gt;two = print(2)
+2
+&gt;&gt;&gt;print(two)
+None %有些人会报错
+</code></pre><p>第一个式子中<code>print</code>接收到2，于是老老实实的把2打印了出来，而第二个例子中因为two没有给<code>print</code>赋予任何的数值，<code>print</code>会返回<code>None</code>，而新版python的interpreter会把<code>two</code>当成没有定义的函数，从而报错。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>本文基于加州伯克利大学CS61a2020年春季公开资料写成，目的在于帮助他人更好的使用相关资源，以上仅为本人经验总结及学习回顾，详细资料请自行访问加州伯克利大学CS61a课程官网<a target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs61a/archives.html">https://inst.eecs.berkeley.edu/~cs61a/archives.html</a>，如果对<code>ok</code>有什么问题请查阅<a target="_blank" rel="noopener" href="https://cal-cs-61a-staff.github.io/ok-help/">https://cal-cs-61a-staff.github.io/ok-help/</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer/" rel="tag"># Computer</a>
+              <a href="/tags/Founctional-Programming/" rel="tag"># Founctional Programming</a>
+              <a href="/tags/SICP/" rel="tag"># SICP</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/01/SICP1/" rel="prev" title="SICP1">
+      <i class="fa fa-chevron-left"></i> SICP1
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%93%8D%E4%BD%9C%E6%A0%B7%E4%BE%8B%E7%9A%84%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">在终端中操作样例的常见错误</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SICP%E6%8F%90%E4%BA%A4%E4%BD%9C%E4%B8%9A%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">SICP提交作业方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hw%E7%9A%84%E6%89%B9%E6%94%B9%E6%96%B9%E6%B3%95"><span class="nav-number">3.1.</span> <span class="nav-text">hw的批改方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.1.1.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lab%E7%9A%84%E6%89%B9%E6%94%B9%E6%96%B9%E6%B3%95"><span class="nav-number">3.2.</span> <span class="nav-text">lab的批改方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0%E4%BB%A5%E5%8F%8A%E9%9D%9E%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="nav-number">4.</span> <span class="nav-text">纯函数以及非纯函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">纯函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%AF%E5%87%BD%E6%95%B0"><span class="nav-number">4.2.</span> <span class="nav-text">非纯函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Langford Huang"
+      src="/images/earth.jpg">
+  <p class="site-author-name" itemprop="name">Langford Huang</p>
+  <div class="site-description" itemprop="description">物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021/2/3 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Langford Huang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
