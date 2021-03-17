@@ -13,7 +13,7 @@
       
       <categories>
           
-          <category> 线性代数 </category>
+          <category> 高等数学 </category>
           
       </categories>
       
@@ -134,9 +134,9 @@
       
         <tags>
             
-            <tag> Git </tag>
-            
             <tag> Computer </tag>
+            
+            <tag> Git </tag>
             
         </tags>
       
