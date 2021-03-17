@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/aphysics_128px.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/physics_32px.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/physics_16px.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="雅可比矩阵与雅可比行列式本文着重探讨雅可比行列式以及雅可比矩阵在基础力学(张量分析)中的一些作用，以及作用的证明，方便之后的流体力学、连续介质力学等基础力学的推导(并不包括代数几何方面的内容) 定义与概念我们定义 \mathcal{J} &#x3D;\frac{\partial (x_1,x_2,x_3\cdots x_m)}{\partial (\xi _1,\xi_2,\xi_3\cdots \xi_n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="雅可比与坐标变换">
+<meta property="og:url" content="http://example.com/2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/index.html">
+<meta property="og:site_name" content="Langford">
+<meta property="og:description" content="雅可比矩阵与雅可比行列式本文着重探讨雅可比行列式以及雅可比矩阵在基础力学(张量分析)中的一些作用，以及作用的证明，方便之后的流体力学、连续介质力学等基础力学的推导(并不包括代数几何方面的内容) 定义与概念我们定义 \mathcal{J} &#x3D;\frac{\partial (x_1,x_2,x_3\cdots x_m)}{\partial (\xi _1,\xi_2,\xi_3\cdots \xi_n">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-02-16T07:39:28.000Z">
+<meta property="article:modified_time" content="2021-03-17T14:16:54.220Z">
+<meta property="article:author" content="Langford Huang">
+<meta property="article:tag" content="线性代数">
+<meta property="article:tag" content="张量分析">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>雅可比与坐标变换 | Langford</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Langford</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">dahung</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/earth.jpg">
+      <meta itemprop="name" content="Langford Huang">
+      <meta itemprop="description" content="物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Langford">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          雅可比与坐标变换
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-16 15:39:28" itemprop="dateCreated datePublished" datetime="2021-02-16T15:39:28+08:00">2021-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-17 22:16:54" itemprop="dateModified" datetime="2021-03-17T22:16:54+08:00">2021-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">线性代数</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="雅可比矩阵与雅可比行列式"><a href="#雅可比矩阵与雅可比行列式" class="headerlink" title="雅可比矩阵与雅可比行列式"></a>雅可比矩阵与雅可比行列式</h1><p>本文着重探讨雅可比行列式以及雅可比矩阵在基础力学(张量分析)中的一些作用，以及作用的证明，方便之后的流体力学、连续介质力学等基础力学的推导(并不包括代数几何方面的内容)</p>
+<h2 id="定义与概念"><a href="#定义与概念" class="headerlink" title="定义与概念"></a>定义与概念</h2><p>我们定义</p>
+<script type="math/tex; mode=display">\mathcal{J} =\frac{\partial (x_1,x_2,x_3\cdots x_m)}{\partial (\xi _1,\xi_2,\xi_3\cdots \xi_n)}=
+\left[
+\begin{array}{ccc}
+    \frac{\partial x_1}{\partial \xi_1}&\cdots&\frac{\partial x_1}{\partial \xi_n}\\
+    \vdots &\ddots &\vdots \\
+    \frac{\partial x_m}{\partial \xi_1}&\cdots&\frac{\partial x_m}{\partial \xi_n}
+\end{array}
+\right]</script><p>上式中右侧矩阵称为雅可比矩阵，其中$x_i=x_i(\xi_1,\xi_2,\cdots,\xi_n)(i=1,2,3\cdots m)$解释为任意一个x都是关于$\xi$的函数。而雅可比矩阵的行列式就是雅可比行列式。在此处我举一个不太严谨的例子来帮助读者理解，我们都知道要表达一个一元函数在某一点处的线性逼近值，我们有它在这一点上的导数，而当我们将一元函数的概念扩大到n维空间向量函数向m维空间的另一个向量函数的映射时，它的导数就是我们的主角————雅可比矩阵。我们用具体的实例来阐释它。  </p>
+<h2 id="雅可比矩阵在坐标变换中的使用"><a href="#雅可比矩阵在坐标变换中的使用" class="headerlink" title="雅可比矩阵在坐标变换中的使用"></a>雅可比矩阵在坐标变换中的使用</h2><p>雅可比矩阵在<strong>张量</strong>中最重要的作用就是坐标转化。取笛卡尔坐标系(记为$D$）下的一组基矢量$x^{k’}$将其记作$x^{1’},x^{2’},x^{3’}$，同时取任意坐标系(记为$K$)一组基矢量$x^i$，将其记为$x^1,x^2,x^3$，二者以角标上撇号区分，相对的每一个笛卡尔坐标基矢量都是零一坐标系下三个基矢量的函数，反之亦然，用公式表示为：</p>
+<script type="math/tex; mode=display">x^{k'}=x^{k'}(x^1,x^2,x^3)=x^{i}</script><script type="math/tex; mode=display">x^{i}=x^i(x^{1'},x^{2'},x^{3'})=x^{k'}</script><p>当满足雅可比行列不为零时即：</p>
+<script type="math/tex; mode=display">det(\frac{\partial x^{k'}}{\partial x^{i}})\neq0</script><script type="math/tex; mode=display">det(\frac{\partial x^{i}}{\partial x^{k'}})\neq0</script><p>就可以得到雅可比矩阵，并用来坐标转化。现有一向量在$D$下表达为$\overrightarrow{V}=(v_1’,v_2’,v_3’)=v_k’$，欲求得该向量在$K$下表示我们可以直接将其与雅可比矩阵相乘即</p>
+<script type="math/tex; mode=display">v_i=[\frac{\partial x^{i}}{\partial x^{k'}}]\cdot v_k'</script><p>以上是两个三维坐标间的相互转化，拓展到任意维度之间的坐标转化，雅可比矩阵适用方法不变。</p>
+<h2 id="雅可比行列式在n维空间中微元体积转化作用及其证明"><a href="#雅可比行列式在n维空间中微元体积转化作用及其证明" class="headerlink" title="雅可比行列式在n维空间中微元体积转化作用及其证明"></a>雅可比行列式在n维空间中微元体积转化作用及其证明</h2><p>再来看雅可比行列式的作用，我们现在推导n维空间中不同坐标系下的体积转化。<br>设我们在坐标系$A_1$中有基矢量$y_i$其中$(i=1,2,3\cdots n)$，而在坐标系$A_2$中有基矢量$x_j$其中$(j=1,2,3 \cdots n)$自然在坐标系$A_1$中就有单位体积元为$dy_1dy_2\cdots dy_n$那么该体积在坐标系$A_2$中到底是如何表示的呢？<br>先给出结论：</p>
+<script type="math/tex; mode=display">dy_1dy_2dy_3\cdots y_n=\|\frac{\partial y_i}{\partial x_j}\|dx_1dx_2dx_3\cdots dx_n</script><p>其中$|\frac{\partial y_i}{\partial x_j}|$指代雅可比行列式的绝对值。[1]<br>很遗憾，在全网搜寻n维空间中单位元有关雅可比行列式的严格证明时遇见了困难，大多数数学资料只是将证明推证到二维（三维）便戛然而止，网络上现成的n维空间证明在严格推证后我个人认为有一定问题，暂不列于本文，但从美国数学协会网站以及各种教科书中都明确表示我们的结论是正确的且被广泛运用的。<br>在此我们证明二维及三维中雅可比行列式在单位元转化时的作用，并把他们表达在最常用的多重积分中。(以下证明整理自[1])<br>首先是二重积分：</p>
+<script type="math/tex; mode=display">\iint\limits_{R_{xy}} F(x,y)dx dy=\pm\iint\limits_{R_{uv}}F[f(u,v),g(u,v)]\frac{\partial (x,y)}{\partial(u,v)}</script><p>注意此处我们将绝对值符号去掉了，并在等号左边加上了正负号，代表不知道雅可比行列式的最终值是正还是负。<br>我们做出几个假设：<br>1.上式中的$R_{xy}$和$R_{uv}$是在xy、uv平面上的闭合区域，其边界$C_{xy}$以及$C_{uv}$分段光滑<br>2.被积函数$F(x,y)$在相应区间内可导且一次导数连续<br>3.等式右边的$f(u,v)$及$g(u,v)$在相应区域内有连续的二阶导，且只要在$D_{uv}$上就在相应的$R_{xy}$上<br>4.点$(u,v)$在$xy$平面上有对应映射点$(x,y)$，且$x=f(u,v),y=g(u,v)$<br>我们根据此创造了很宽松的假设条件，除了$R_{uv}$边界上的点在$R_{xy}$的边界上需要一一映射，其余区域内部的点并没有一一映射的要求，也就是说只要在$R_{uv}$内部的点在$R_{xy}$上有映射就可以。<br>我们令$Q(x,y)$满足</p>
+<script type="math/tex; mode=display">\frac{\partial Q}{\partial x}=F(x,y)</script><p>则原式为（反向运用Green公式）  </p>
+<script type="math/tex; mode=display">\iint\limits_{R_{xy}} F(x,y)dx dy=\iint\limits_{R_{xy}} \frac{\partial Q}{\partial x}dx dy=\oint\limits_{C_{xy}} Q(x,y)dy</script><p>我们再将$x,y$用$f,g$表示，将$dy$用$dg$的全微分形式表示则有：  </p>
+<script type="math/tex; mode=display">\oint\limits_{C_{uv}} Q(f(u,v),g(u,v))[\frac{\partial g}{\partial u}du+\frac{\partial g}{\partial v}dv]</script><p>如果你对Green公式足够熟悉，则你应该有感觉，经过一系列变换我们的式子已经迫近Green公式了。我们再做一次变换，可以看得更清楚。<br>令$P_1=Q\frac{\partial g}{\partial u},Q_1=Q\frac{\partial g}{\partial v}$原式变为  </p>
+<script type="math/tex; mode=display">\oint\limits_{C_{uv}} Q_1dv+P_1du</script><p>进行格林公式变换！  </p>
+<script type="math/tex; mode=display">\iint\limits_{R_{uv}}\frac{\partial Q_1}{\partial u}-\frac{\partial P_1}{\partial v}dudv</script><p>让我们尝试着把它们展开回到$x,y$表达看看会发什么！<br>原式为</p>
+<script type="math/tex; mode=display">\iint\limits_{R_{uv}}\frac{\partial Q}{\partial u}\frac{\partial g}{\partial v}+Q\frac{\partial^2 g}{\partial v\partial u}-\frac{\partial Q}{\partial v}\frac{\partial g}{\partial v}-Q\frac{\partial^2 g}{\partial v\partial u}dudv</script><script type="math/tex; mode=display">=\iint\limits_{R_{uv}}\frac{\partial Q}{\partial x}(\frac{\partial f}{\partial u}\frac{\partial g}{\partial v}-\frac{\partial f}{\partial v}\frac{\partial g}{\partial u})</script><p>其中$\frac{\partial Q}{\partial u}=F[f(u,v),g(u,v)]$而最最重要的是，后面的部分就是<strong>雅可比行列式</strong></p>
+<script type="math/tex; mode=display">\frac{\partial (x,y)}{\partial (u,v)}=\frac{\partial f}{\partial u}\frac{\partial g}{\partial v}-\frac{\partial f}{\partial v}\frac{\partial g}{\partial u}</script><p>综上：</p>
+<script type="math/tex; mode=display">\iint\limits_{R_{xy}} F(x,y)dx dy=\pm\iint\limits_{R_{uv}}F[f(u,v),g(u,v)]\frac{\partial (x,y)}{\partial(u,v)}</script><p>这里雅可比行列式用于连接二维空间中不同的微元，我们推广到n维空间则有我们一开始给出的结论，在这里再次复述一遍：</p>
+<script type="math/tex; mode=display">dy_1dy_2dy_3\cdots y_n=\|\frac{\partial y_i}{\partial x_j}\|dx_1dx_2dx_3\cdots dx_n</script><p>其中$|\frac{\partial y_i}{\partial x_j}|$指代雅可比行列式的绝对值。</p>
+<p><strong>注意</strong>这里的体积转化涉及两个问题，一是由于微元体积大小不存在负数，雅可比行列式必须要取绝对值，二是这里的转化不能再像雅可比矩阵中任意维度之间随意转化，而是必须在同一维度下转化。<br>（未完待续）</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1]《Advanced Calculus by Wilfred Kaplan》 fifth edition page:94  </p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" rel="tag"># 线性代数</a>
+              <a href="/tags/%E5%BC%A0%E9%87%8F%E5%88%86%E6%9E%90/" rel="tag"># 张量分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/04/Git-and-Github/" rel="prev" title="Git与Github(1 git与github简介)">
+      <i class="fa fa-chevron-left"></i> Git与Github(1 git与github简介)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/19/%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A61/" rel="next" title="高等数学1">
+      高等数学1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5%E4%B8%8E%E9%9B%85%E5%8F%AF%E6%AF%94%E8%A1%8C%E5%88%97%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">雅可比矩阵与雅可比行列式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E4%B8%8E%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">定义与概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5%E5%9C%A8%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">雅可比矩阵在坐标变换中的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E8%A1%8C%E5%88%97%E5%BC%8F%E5%9C%A8n%E7%BB%B4%E7%A9%BA%E9%97%B4%E4%B8%AD%E5%BE%AE%E5%85%83%E4%BD%93%E7%A7%AF%E8%BD%AC%E5%8C%96%E4%BD%9C%E7%94%A8%E5%8F%8A%E5%85%B6%E8%AF%81%E6%98%8E"><span class="nav-number">1.3.</span> <span class="nav-text">雅可比行列式在n维空间中微元体积转化作用及其证明</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="nav-number">2.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Langford Huang"
+      src="/images/earth.jpg">
+  <p class="site-author-name" itemprop="name">Langford Huang</p>
+  <div class="site-description" itemprop="description">物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2021/2/3 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Langford Huang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

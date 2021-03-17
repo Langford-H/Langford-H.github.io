@@ -202,7 +202,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/03/11/SICP2020-1/" class="post-title-link" itemprop="url">SICP2020(1)</a>
+            <a href="/2021/03/11/SICP2020-1/" class="post-title-link" itemprop="url">SICP2020(1)[CS61a资源的使用方法、纯函数]</a>
         </h2>
 
         <div class="post-meta">
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-12 09:18:22" itemprop="dateModified" datetime="2021-03-12T09:18:22+08:00">2021-03-12</time>
+                <time title="修改时间：2021-03-17 10:29:50" itemprop="dateModified" datetime="2021-03-17T10:29:50+08:00">2021-03-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -507,6 +507,107 @@ None %有些人会报错
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/earth.jpg">
+      <meta itemprop="name" content="Langford Huang">
+      <meta itemprop="description" content="物理 力学 计算机 数学 联系邮箱 dahuanghhc@gmail.com">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Langford">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/02/16/%E9%9B%85%E5%8F%AF%E6%AF%94%E4%B8%8E%E5%9D%90%E6%A0%87%E5%8F%98%E6%8D%A2/" class="post-title-link" itemprop="url">雅可比与坐标变换</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-16 15:39:28" itemprop="dateCreated datePublished" datetime="2021-02-16T15:39:28+08:00">2021-02-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-17 22:16:54" itemprop="dateModified" datetime="2021-03-17T22:16:54+08:00">2021-03-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" itemprop="url" rel="index"><span itemprop="name">线性代数</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="雅可比矩阵与雅可比行列式"><a href="#雅可比矩阵与雅可比行列式" class="headerlink" title="雅可比矩阵与雅可比行列式"></a>雅可比矩阵与雅可比行列式</h1><p>本文着重探讨雅可比行列式以及雅可比矩阵在基础力学(张量分析)中的一些作用，以及作用的证明，方便之后的流体力学、连续介质力学等基础力学的推导(并不包括代数几何方面的内容)</p>
+<h2 id="定义与概念"><a href="#定义与概念" class="headerlink" title="定义与概念"></a>定义与概念</h2><p>我们定义</p>
+<script type="math/tex; mode=display">\mathcal{J} =\frac{\partial (x_1,x_2,x_3\cdots x_m)}{\partial (\xi _1,\xi_2,\xi_3\cdots \xi_n)}=
+\left[
+\begin{array}{ccc}
+    \frac{\partial x_1}{\partial \xi_1}&\cdots&\frac{\partial x_1}{\partial \xi_n}\\
+    \vdots &\ddots &\vdots \\
+    \frac{\partial x_m}{\partial \xi_1}&\cdots&\frac{\partial x_m}{\partial \xi_n}
+\end{array}
+\right]</script><p>上式中右侧矩阵称为雅可比矩阵，其中$x_i=x_i(\xi_1,\xi_2,\cdots,\xi_n)(i=1,2,3\cdots m)$解释为任意一个x都是关于$\xi$的函数。而雅可比矩阵的行列式就是雅可比行列式。在此处我举一个不太严谨的例子来帮助读者理解，我们都知道要表达一个一元函数在某一点处的线性逼近值，我们有它在这一点上的导数，而当我们将一元函数的概念扩大到n维空间向量函数向m维空间的另一个向量函数的映射时，它的导数就是我们的主角————雅可比矩阵。我们用具体的实例来阐释它。  </p>
+<h2 id="雅可比矩阵在坐标变换中的使用"><a href="#雅可比矩阵在坐标变换中的使用" class="headerlink" title="雅可比矩阵在坐标变换中的使用"></a>雅可比矩阵在坐标变换中的使用</h2><p>雅可比矩阵在<strong>张量</strong>中最重要的作用就是坐标转化。取笛卡尔坐标系(记为$D$）下的一组基矢量$x^{k’}$将其记作$x^{1’},x^{2’},x^{3’}$，同时取任意坐标系(记为$K$)一组基矢量$x^i$，将其记为$x^1,x^2,x^3$，二者以角标上撇号区分，相对的每一个笛卡尔坐标基矢量都是零一坐标系下三个基矢量的函数，反之亦然，用公式表示为：</p>
+<script type="math/tex; mode=display">x^{k'}=x^{k'}(x^1,x^2,x^3)=x^{i}</script><script type="math/tex; mode=display">x^{i}=x^i(x^{1'},x^{2'},x^{3'})=x^{k'}</script><p>当满足雅可比行列不为零时即：</p>
+<script type="math/tex; mode=display">det(\frac{\partial x^{k'}}{\partial x^{i}})\neq0</script><script type="math/tex; mode=display">det(\frac{\partial x^{i}}{\partial x^{k'}})\neq0</script><p>就可以得到雅可比矩阵，并用来坐标转化。现有一向量在$D$下表达为$\overrightarrow{V}=(v_1’,v_2’,v_3’)=v_k’$，欲求得该向量在$K$下表示我们可以直接将其与雅可比矩阵相乘即</p>
+<script type="math/tex; mode=display">v_i=[\frac{\partial x^{i}}{\partial x^{k'}}]\cdot v_k'</script><p>以上是两个三维坐标间的相互转化，拓展到任意维度之间的坐标转化，雅可比矩阵适用方法不变。</p>
+<h2 id="雅可比行列式在n维空间中微元体积转化作用及其证明"><a href="#雅可比行列式在n维空间中微元体积转化作用及其证明" class="headerlink" title="雅可比行列式在n维空间中微元体积转化作用及其证明"></a>雅可比行列式在n维空间中微元体积转化作用及其证明</h2><p>再来看雅可比行列式的作用，我们现在推导n维空间中不同坐标系下的体积转化。<br>设我们在坐标系$A_1$中有基矢量$y_i$其中$(i=1,2,3\cdots n)$，而在坐标系$A_2$中有基矢量$x_j$其中$(j=1,2,3 \cdots n)$自然在坐标系$A_1$中就有单位体积元为$dy_1dy_2\cdots dy_n$那么该体积在坐标系$A_2$中到底是如何表示的呢？<br>先给出结论：</p>
+<script type="math/tex; mode=display">dy_1dy_2dy_3\cdots y_n=\|\frac{\partial y_i}{\partial x_j}\|dx_1dx_2dx_3\cdots dx_n</script><p>其中$|\frac{\partial y_i}{\partial x_j}|$指代雅可比行列式的绝对值。[1]<br>很遗憾，在全网搜寻n维空间中单位元有关雅可比行列式的严格证明时遇见了困难，大多数数学资料只是将证明推证到二维（三维）便戛然而止，网络上现成的n维空间证明在严格推证后我个人认为有一定问题，暂不列于本文，但从美国数学协会网站以及各种教科书中都明确表示我们的结论是正确的且被广泛运用的。<br>在此我们证明二维及三维中雅可比行列式在单位元转化时的作用，并把他们表达在最常用的多重积分中。(以下证明整理自[1])<br>首先是二重积分：</p>
+<script type="math/tex; mode=display">\iint\limits_{R_{xy}} F(x,y)dx dy=\pm\iint\limits_{R_{uv}}F[f(u,v),g(u,v)]\frac{\partial (x,y)}{\partial(u,v)}</script><p>注意此处我们将绝对值符号去掉了，并在等号左边加上了正负号，代表不知道雅可比行列式的最终值是正还是负。<br>我们做出几个假设：<br>1.上式中的$R_{xy}$和$R_{uv}$是在xy、uv平面上的闭合区域，其边界$C_{xy}$以及$C_{uv}$分段光滑<br>2.被积函数$F(x,y)$在相应区间内可导且一次导数连续<br>3.等式右边的$f(u,v)$及$g(u,v)$在相应区域内有连续的二阶导，且只要在$D_{uv}$上就在相应的$R_{xy}$上<br>4.点$(u,v)$在$xy$平面上有对应映射点$(x,y)$，且$x=f(u,v),y=g(u,v)$<br>我们根据此创造了很宽松的假设条件，除了$R_{uv}$边界上的点在$R_{xy}$的边界上需要一一映射，其余区域内部的点并没有一一映射的要求，也就是说只要在$R_{uv}$内部的点在$R_{xy}$上有映射就可以。<br>我们令$Q(x,y)$满足</p>
+<script type="math/tex; mode=display">\frac{\partial Q}{\partial x}=F(x,y)</script><p>则原式为（反向运用Green公式）  </p>
+<script type="math/tex; mode=display">\iint\limits_{R_{xy}} F(x,y)dx dy=\iint\limits_{R_{xy}} \frac{\partial Q}{\partial x}dx dy=\oint\limits_{C_{xy}} Q(x,y)dy</script><p>我们再将$x,y$用$f,g$表示，将$dy$用$dg$的全微分形式表示则有：  </p>
+<script type="math/tex; mode=display">\oint\limits_{C_{uv}} Q(f(u,v),g(u,v))[\frac{\partial g}{\partial u}du+\frac{\partial g}{\partial v}dv]</script><p>如果你对Green公式足够熟悉，则你应该有感觉，经过一系列变换我们的式子已经迫近Green公式了。我们再做一次变换，可以看得更清楚。<br>令$P_1=Q\frac{\partial g}{\partial u},Q_1=Q\frac{\partial g}{\partial v}$原式变为  </p>
+<script type="math/tex; mode=display">\oint\limits_{C_{uv}} Q_1dv+P_1du</script><p>进行格林公式变换！  </p>
+<script type="math/tex; mode=display">\iint\limits_{R_{uv}}\frac{\partial Q_1}{\partial u}-\frac{\partial P_1}{\partial v}dudv</script><p>让我们尝试着把它们展开回到$x,y$表达看看会发什么！<br>原式为</p>
+<script type="math/tex; mode=display">\iint\limits_{R_{uv}}\frac{\partial Q}{\partial u}\frac{\partial g}{\partial v}+Q\frac{\partial^2 g}{\partial v\partial u}-\frac{\partial Q}{\partial v}\frac{\partial g}{\partial v}-Q\frac{\partial^2 g}{\partial v\partial u}dudv</script><script type="math/tex; mode=display">=\iint\limits_{R_{uv}}\frac{\partial Q}{\partial x}(\frac{\partial f}{\partial u}\frac{\partial g}{\partial v}-\frac{\partial f}{\partial v}\frac{\partial g}{\partial u})</script><p>其中$\frac{\partial Q}{\partial u}=F[f(u,v),g(u,v)]$而最最重要的是，后面的部分就是<strong>雅可比行列式</strong></p>
+<script type="math/tex; mode=display">\frac{\partial (x,y)}{\partial (u,v)}=\frac{\partial f}{\partial u}\frac{\partial g}{\partial v}-\frac{\partial f}{\partial v}\frac{\partial g}{\partial u}</script><p>综上：</p>
+<script type="math/tex; mode=display">\iint\limits_{R_{xy}} F(x,y)dx dy=\pm\iint\limits_{R_{uv}}F[f(u,v),g(u,v)]\frac{\partial (x,y)}{\partial(u,v)}</script><p>这里雅可比行列式用于连接二维空间中不同的微元，我们推广到n维空间则有我们一开始给出的结论，在这里再次复述一遍：</p>
+<script type="math/tex; mode=display">dy_1dy_2dy_3\cdots y_n=\|\frac{\partial y_i}{\partial x_j}\|dx_1dx_2dx_3\cdots dx_n</script><p>其中$|\frac{\partial y_i}{\partial x_j}|$指代雅可比行列式的绝对值。</p>
+<p><strong>注意</strong>这里的体积转化涉及两个问题，一是由于微元体积大小不存在负数，雅可比行列式必须要取绝对值，二是这里的转化不能再像雅可比矩阵中任意维度之间随意转化，而是必须在同一维度下转化。<br>（未完待续）</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1]《Advanced Calculus by Wilfred Kaplan》 fifth edition page:94  </p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/04/Git-and-Github/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -654,20 +755,20 @@ None %有些人会报错
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
