@@ -13,7 +13,7 @@
       
       <categories>
           
-          <category> 高等数学 </category>
+          <category> 微积分 </category>
           
       </categories>
       
@@ -134,9 +134,9 @@
       
         <tags>
             
-            <tag> Computer </tag>
-            
             <tag> Git </tag>
+            
+            <tag> Computer </tag>
             
         </tags>
       
