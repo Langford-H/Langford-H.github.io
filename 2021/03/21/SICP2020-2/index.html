@@ -28,8 +28,9 @@
 <meta property="og:description" content="摘要本篇作为2020年春季Functional Programming总结的第二篇，内容大致包括python语言的环境（environment）框架（frame）特点，以及hw1、lab01中一些有趣题目的答案与反思。相关具体细节（例如函数的自定义等）原课程网上教科书已经编写的相当清楚，我就不再班门弄斧了，本篇目的是自己在学习过程中间的思考想法，仅供参考。希望你玩的愉快！ 环境（environme">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/03/21/SICP2020-2/1.png">
+<meta property="og:image" content="http://example.com/2021/03/21/SICP2020-2/2.png">
 <meta property="article:published_time" content="2021-03-21T09:20:37.000Z">
-<meta property="article:modified_time" content="2021-03-21T09:20:37.951Z">
+<meta property="article:modified_time" content="2021-03-21T09:27:24.438Z">
 <meta property="article:author" content="Langford Huang">
 <meta property="article:tag" content="Computer">
 <meta property="article:tag" content="Founctional Programming">
@@ -218,8 +219,9 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2021-03-21 17:20:37" itemprop="dateCreated datePublished" datetime="2021-03-21T17:20:37+08:00">2021-03-21</time>
+              <time title="创建时间：2021-03-21 17:20:37 / 修改时间：17:27:24" itemprop="dateCreated datePublished" datetime="2021-03-21T17:20:37+08:00">2021-03-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -243,24 +245,36 @@
 
       
         <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本篇作为2020年春季Functional Programming总结的第二篇，内容大致包括python语言的环境（environment）框架（frame）特点，以及hw1、lab01中一些有趣题目的答案与反思。相关具体细节（例如函数的自定义等）原课程网上教科书已经编写的相当清楚，我就不再班门弄斧了，本篇目的是自己在学习过程中间的思考想法，仅供参考。希望你玩的愉快！</p>
-<h1 id="环境（environment）及框架（frame）"><a href="#环境（environment）及框架（frame）" class="headerlink" title="环境（environment）及框架（frame）"></a>环境（environment）及框架（frame）</h1><p>这是Founction Programming这门课程出现的第一个重要知识点，这种思考方式适用于<strong>任何编程环境</strong>、<strong>任何编程化的语言</strong>。<br>思考几个问题：当我们仅仅定义一个函数时发生了什么？当我们在python中定义一个函数，并在之后使用它时发生了什么？当我们从库中调用一个函数时发生了什么？如果我们定义的函数是嵌套的（nested），那我们在使用这个函数时发生了什么？<br>要理清这几个问题我们先搞清楚python的一个重要因素，环境（environment）<br>环境是指python在运行各个函数时的<em>背景</em>，它是由多个<em>框架</em>构成的。先不要着急理解它，引用课堂例子我们看如下代码：<br>    from math import pi<br>    pau = 2<em>pi<br>运行这个代码后，我们在<strong>全局</strong>下创造了一个<strong>盒子</strong>，我们首先从<code>math</code>库中将<code>pi</code>调用出来放进这个盒子中，然后根据我们的运算规则将相应的计算值赋予<code>pau</code>，同时把它也扔进盒子中。我们取课本原图表示这一环节。<br><img src="/2021/03/21/SICP2020-2/1.png" class><br>这个盒子就是我们创造的全局环境，我们不管之后再添加什么代码，只要还在全局环境下，那么<code>pi = 3.14....</code>，而`pau = 2</em>pi<code>，我们可以直接使用则两个名字代表数据。  
-我们再来看我们定义函数时会发生什么。有一定python基础的人（比如我）在不知道答案的时候往往会认为，一旦函数定义，python会将函数储存起来，形成一个自我的密闭空间。但事实并不是这样。
-    from math import mul
-    def square(x):
-        return mul(x, x)
-我们在运行以上代码后，函数</code>square<code>并不会像我们想象的一样自动形成一个封闭的空间，而是跟我们之前的附值一样，将名称</code>square<code>保留在全局变量下，不会管它到底怎么运行，会返回什么，计算机只是将名称静置在全局环境中并且标明：这是一个函数，等待被召唤。引用课堂原图
-&#123;% asset_image 2.png %&#125;
-而当我们使用我们所定义的函数的时候，函数会被唤醒，生成一个新的盒子，也就在此时我们函数的内容才会被interpreter审视进行相关的操作。值得注意的是，我们使用函数自己创造的盒子中的附值操作（assignment）都不会传递到任何的其他盒子中！附值操作只要出了这个盒子（环境）就消失了，不要妄图在盒子外使用自己在盒子内部的附值名称。  
-每一个盒子（除了全局）都有一个“母盒”（parent）你可以理解为新的盒子实在其之上建立的。如果你只是单纯定义了一个函数，那么该函数的“母盒”就是全局（global），如果是嵌套环境，则内部函数的母环境就是外部函数。每一个盒子内部的附值都不能拿出这个盒子，例如：
-    def example(x):
-        i = 1
+<h1 id="环境（environment）及框架（frame）"><a href="#环境（environment）及框架（frame）" class="headerlink" title="环境（environment）及框架（frame）"></a>环境（environment）及框架（frame）</h1><p>这是Founction Programming这门课程出现的第一个重要知识点，这种思考方式适用于<strong>任何编程环境</strong>、<strong>任何编程化的语言</strong>。<br>思考几个问题：当我们仅仅定义一个函数时发生了什么？当我们在python中定义一个函数，并在之后使用它时发生了什么？当我们从库中调用一个函数时发生了什么？如果我们定义的函数是嵌套的（nested），那我们在使用这个函数时发生了什么？<br>要理清这几个问题我们先搞清楚python的一个重要因素，环境（environment）<br>环境是指python在运行各个函数时的<em>背景</em>，它是由多个<em>框架</em>构成的。先不要着急理解它，引用课堂例子我们看如下代码：<br>    from math import pi<br>    pau = 2<em>pi<br>运行这个代码后，我们在<strong>全局</strong>下创造了一个<em>*盒子</em></em>，我们首先从<code>math</code>库中将<code>pi</code>调用出来放进这个盒子中，然后根据我们的运算规则将相应的计算值赋予<code>pau</code>，同时把它也扔进盒子中。我们取课本原图表示这一环节。<br><img src="/2021/03/21/SICP2020-2/1.png" class><br>这个盒子就是我们创造的全局环境，我们不管之后再添加什么代码，只要还在全局环境下，那么<code>pi = 3.14....</code>，而<code>pau = 2pi</code>，我们可以直接使用则两个名字代表数据。<br>我们再来看我们定义函数时会发生什么。有一定python基础的人（比如我）在不知道答案的时候往往会认为，一旦函数定义，python会将函数储存起来，形成一个自我的密闭空间。但事实并不是这样。  </p>
+<pre><code>from math import mul
+def square(x):
+    return mul(x, x)
+</code></pre><p>我们在运行以上代码后，函数<code>square</code>并不会像我们想象的一样自动形成一个封闭的空间，而是跟我们之前的附值一样，将名称<code>square</code>保留在全局变量下，不会管它到底怎么运行，会返回什么，计算机只是将名称静置在全局环境中并且标明：这是一个函数，等待被召唤。引用课堂原图<br><img src="/2021/03/21/SICP2020-2/2.png" class><br>而当我们使用我们所定义的函数的时候，函数会被唤醒，生成一个新的盒子，也就在此时我们函数的内容才会被interpreter审视进行相关的操作。值得注意的是，我们使用函数自己创造的盒子中的附值操作（assignment）都不会传递到任何的其他盒子中！附值操作只要出了这个盒子（环境）就消失了，不要妄图在盒子外使用自己在盒子内部的附值名称。<br>每一个盒子（除了全局）都有一个“母盒”（parent）你可以理解为新的盒子实在其之上建立的。如果你只是单纯定义了一个函数，那么该函数的“母盒”就是全局（global），如果是嵌套环境，则内部函数的母环境就是外部函数。每一个盒子内部的附值都不能拿出这个盒子，例如：  </p>
+<pre><code>def example(x):
+    i = 1
+    return x + 1
+i
+</code></pre><p>程序会报错，因为<code>i</code>仅仅在函数内部定义，在出了函数之后就再无定义了。我们将这种数据（不光是附值，在一个自定义函数里定义的嵌套函数的名称拿到全局环境下也没有作用）称为局部变量（local variable）。<br>那么又有一个问题，母环境下的值可以在子环境中引用吗？可以用，但是请避免这种情况发生。在python2.x时代子环境，也就是我们说的子盒是没有权力调用<em>除全局变量定义的附值</em>的，而在python3.x时代这个问题似乎解决了，因为如果你尝试以下代码：  </p>
+<pre><code>def example2(x):
+    i = 1
+    def sub():
         return x + 1
-    i
-程序会报错，因为</code>i`仅仅在函数内部定义，在出了函数之后就再无定义了。我们将这种数据（不光是附值，在一个自定义函数里定义的嵌套函数的名称拿到全局环境下也没有作用）称为局部变量（local variable）。<br>那么又有一个问题，母环境下的值可以在子环境中引用吗？可以用，但是请避免这种情况发生。在python2.x时代子环境，也就是我们说的子盒是没有权力调用<em>除全局变量定义的附值</em>的，而在python3.x时代这个问题似乎解决了，因为如果你尝试以下代码：<br>    def example2(x):<br>        i = 1<br>        def sub():<br>            return x + 1<br>        return sub()</p>
-<pre><code>k = example2(1)
+    return sub()
+
+k = example2(1)
 k
 &gt;&gt;&gt;2
-</code></pre><p>计算机返还了2，也就是说子盒<code>sub</code>调用了在母盒中的附值<code>i = 1</code>，这一切看上去很完美，但是如果你尝试如下代码你会发现问题：<br>    def count_cond(condition):<br>        i , num = 1 , 0<br>        def conts(n):<br>            while i &lt;= n:<br>                if condition(n, i):<br>                    num = num + 1<br>                i = i + 1<br>            return num<br>        return conts<br>这是一段我自己尝试的代码，系统会报错，信息显示<code>i,num</code>在没有被附值的情况下被调用了。现在这个问题还在各大论坛上有争论，但为例保证代码的流畅以及避免bug，在写代码时还是自动默认一个环境中只能调用自己以及全局幻境中的变量，其余的不要随意进行调用。  </p>
+</code></pre><p>计算机返还了2，也就是说子盒<code>sub</code>调用了在母盒中的附值<code>i = 1</code>，这一切看上去很完美，但是如果你尝试如下代码你会发现问题：  </p>
+<pre><code>def count_cond(condition):
+    i , num = 1 , 0
+    def conts(n):
+        while i &lt;= n:
+            if condition(n, i):
+                num = num + 1
+            i = i + 1
+        return num
+    return conts
+</code></pre><p>这是一段我自己尝试的代码，系统会报错，信息显示<code>i,num</code>在没有被附值的情况下被调用了。现在这个问题还在各大论坛上有争论，但为例保证代码的流畅以及避免bug，在写代码时还是自动默认一个环境中只能调用自己以及全局幻境中的变量，其余的不要随意进行调用。  </p>
 <h1 id="hw1"><a href="#hw1" class="headerlink" title="hw1"></a>hw1</h1><h2 id="Q2"><a href="#Q2" class="headerlink" title="Q2"></a>Q2</h2><pre><code>from operator import add, sub
 
 def a_plus_abs_b(a, b):
@@ -280,8 +294,13 @@ def a_plus_abs_b(a, b):
   else:
       h = _____
   return h(a, b)
-</code></pre><p>非常有意思的一道题目，它其实展现的是python关于附值也就是<code>=</code>这一功能的强大之处，不但可以把名字赋给数值，还可以把名字赋给函数，答案如下：<br>      if b &gt;= 0:<br>          h = add<br>      else:<br>          h = sub<br>      return h(a, b)</p>
-<h2 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h2><pre><code>def if_function(condition, true_result, false_result):
+</code></pre><p>非常有意思的一道题目，它其实展现的是python关于附值也就是<code>=</code>这一功能的强大之处，不但可以把名字赋给数值，还可以把名字赋给函数，答案如下：  </p>
+<pre><code>  if b &gt;= 0:
+      h = add
+  else:
+      h = sub
+  return h(a, b)
+</code></pre><h2 id="Q5"><a href="#Q5" class="headerlink" title="Q5"></a>Q5</h2><pre><code>def if_function(condition, true_result, false_result):
     &quot;&quot;&quot;Return true_result if condition is a true value, and
     false_result otherwise.
 
@@ -329,14 +348,19 @@ def t():
 
 def f():
     &quot;*** YOUR CODE HERE ***&quot;
-</code></pre><p>很有趣的题目答案如下：<br>    def c():<br>        return False</p>
-<pre><code>def t():
+</code></pre><p>很有趣的题目答案如下：  </p>
+<pre><code>def c():
+    return False
+
+def t():
     print(5)
 
 def f():
     print(6)
-</code></pre><p>这道题的问题在于为什么<code>with_if_function</code>在引用的时候会出现两个数字？问题的关键在于<code>()</code>，<code>with_if_function</code>中返还<code>if_function</code>时该函数在干什么？它<em>运行</em>了三个函数<code>c(),t(),f()</code>，计算机会首先运行这三个函数并将这三个函数的<em>值</em>返回。还记得上一章的纯函数吗？<code>print</code>只会在屏幕上打印出值，而返还<code>None</code>，所以我们<em>运行</em>了<code>t(),f()</code>它们自然而然的在屏幕上打印出了<code>5</code>以及<code>6</code>。我们将代码改变一下<br>    def with_if_function():<br>        “””</p>
-<pre><code>    &gt;&gt;&gt; result = with_if_function()
+</code></pre><p>这道题的问题在于为什么<code>with_if_function</code>在引用的时候会出现两个数字？问题的关键在于<code>()</code>，<code>with_if_function</code>中返还<code>if_function</code>时该函数在干什么？它<em>运行</em>了三个函数<code>c(),t(),f()</code>，计算机会首先运行这三个函数并将这三个函数的<em>值</em>返回。还记得上一章的纯函数吗？<code>print</code>只会在屏幕上打印出值，而返还<code>None</code>，所以我们<em>运行</em>了<code>t(),f()</code>它们自然而然的在屏幕上打印出了<code>5</code>以及<code>6</code>。我们将代码改变一下  </p>
+<pre><code>def with_if_function():
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; result = with_if_function()
     5
     6
     &gt;&gt;&gt; print(result)
@@ -345,7 +369,7 @@ def f():
     return if_function(c(), t, f)
 </code></pre><p>这时你会发现<code>with_if_function</code>只出现一个数字了。我们在这里有必要补充一下函数的<strong>调用</strong>（call）</p>
 <h2 id="补充：函数调用"><a href="#补充：函数调用" class="headerlink" title="补充：函数调用"></a>补充：函数调用</h2><p>函数的定义如下<code>def name(parameter1,parameter2...): body</code>函数有一个名字，有相应的参数，以及函数的主体。当你需要一个函数的时候呼叫它的名字即可，调用函数名，由<code>return</code>返回相应的值，则一次完整的函数调用就完成了，但是请注意<code>name</code>与<code>name(parameater1...)</code>二者不是一个东西，前者是使用函数名对函数进行调用，即将函数作为参数或者返回值（在之后的heigher order function中会有涉及），在终端中输入一个函数的名称返回回来的是<code>function&lt;..&gt;</code>括号中跟着函数寄存的内存地址，而后者则是直接使用或是运行这个函数，代表了该函数的返回值。综上在Q5中我们运行了函数<code>f</code>与<code>t</code>它们的返回值<code>None</code>作为了参数输入了<code>if_function</code>中在运行<code>f</code>和<code>t</code>时<code>print</code>函数发挥了威力，它在函数运行时在屏幕上打印出了相应值。  </p>
-<h1 id="Lab01"><a href="#Lab01" class="headerlink" title="Lab01"></a>Lab01</h1><h2 id="Q2-1"><a href="#Q2-1" class="headerlink" title="Q2"></a>Q2</h2><p>WWDP。本问比较多暂且不写回答了，最主要的问题是python对于<code>False</code>的判定，除了<code>False</code>本身的字符串会被判定为“假”意外，<code>0,[],None</code>会被判定为“假”，<em>注意</em>负数，小数在判定中都认为是“真”的，只有<code>0</code>才被判定为假。<br>此外<code>and</code>以及<code>or</code>的返回值要特别注意，它们会返回<strong>最后计算的数值</strong>，<code>and</code>在计算到有一个为假后会返还那个为假命题的数值<strong><em>并跳过后面所有的计算</em></strong>，注意是数值而不是Booleans（True、False）,<code>or</code>则是在计算到有一个为真后就会返还该数值并结束计算。在此处需要注意的是<code>Error</code>具有最高等级，只要任何被判定项中出现错误，则会自动结束并返回错误类型例如：</p>
+<h1 id="Lab01"><a href="#Lab01" class="headerlink" title="Lab01"></a>Lab01</h1><h2 id="Q2-1"><a href="#Q2-1" class="headerlink" title="Q2"></a>Q2</h2><p>WWDP。本问比较多暂且不写回答了，最主要的问题是python对于<code>False</code>的判定，除了<code>False</code>本身的字符串会被判定为“假”意外，<code>0,[],None</code>会被判定为“假”，<em>注意</em>负数，小数在判定中都认为是“真”的，只有<code>0</code>才被判定为假。<br>此外<code>and</code>以及<code>or</code>的返回值要特别注意，它们会返回<strong>最后计算的数值</strong>，<code>and</code>在计算到有一个为假后会返还那个为假命题的数值<strong><em>并跳过后面所有的计算</em></strong>，注意是数值而不是Booleans（True、False）,<code>or</code>则是在计算到有一个为真后就会返还该数值并结束计算。在此处需要注意的是<code>Error</code>具有最高等级，只要任何被判定项中出现错误，则会自动结束并返回错误类型例如：  </p>
 <pre><code>&gt;&gt;&gt;1/0 or 1
 Traceback (most recent call last):
 File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
@@ -366,7 +390,16 @@ ZeroDivisionError: division by zero
     False
     &quot;&quot;&quot;
     &quot;*** YOUR CODE HERE ***&quot;
-</code></pre><p>有很多类型重复的题目，在此就先拿出一道来讲，答案如下：<br>    while n &gt; 1:<br>        if n % 10 == 8:<br>            n = n//10<br>            if n % 10 ==8:<br>                return True<br>        else:<br>            n = n // 10<br>    return False<br>唯一需要注意的点就是<code>//</code>整除符号的运用，在使用整除符号后会忽略小数，是用来解决针对输入数字的每一位单独数字进行处理的必要工具。</p>
+</code></pre><p>有很多类型重复的题目，在此就先拿出一道来讲，答案如下：  </p>
+<pre><code>while n &gt; 1:
+    if n % 10 == 8:
+        n = n//10
+        if n % 10 ==8:
+            return True
+    else:
+        n = n // 10
+return False
+</code></pre><p>唯一需要注意的点就是<code>//</code>整除符号的运用，在使用整除符号后会忽略小数，是用来解决针对输入数字的每一位单独数字进行处理的必要工具。</p>
 
     </div>
 
