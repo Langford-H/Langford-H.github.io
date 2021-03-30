@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>SICP2020(3)[当计算机在运行代码时在想什么？]</title>
+      <link href="2021/03/31/SICP2020-3/"/>
+      <url>2021/03/31/SICP2020-3/</url>
+      
+        <content type="html"><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本篇作为2020年春季Functional Programming总结的第三篇，用全篇来总结迄今在这门课程中学到的最重要的思想：你写代码并告诉编译器运行的时候，编译器（以python的interpreter为例）它到底按照什么顺序，怎么跑的代码，或者说，计算机到底是怎么想的？照例，本文不重复课上的细节问题（因为我太菜，而人家写的太好），仅凭个人经验总结在有限时间学习到的东西，有错误在所难免，欢迎指出，接受批评。</p><h1 id="一道复杂的脑经急转弯"><a href="#一道复杂的脑经急转弯" class="headerlink" title="一道复杂的脑经急转弯"></a>一道复杂的脑经急转弯</h1><p>我们看一组代码：<strong><em>声明！以下代码仅为了了解编译器运行方式，这是非常糟糕的代码，请不要在任何代码中采用以下形式</em></strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">horse</span>(<span class="params">mask</span>):</span></span><br><span class="line">    horse = mask</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">mask</span>(<span class="params">horse</span>):</span></span><br><span class="line">        <span class="keyword">return</span> horse</span><br><span class="line">    <span class="keyword">return</span> horse(mask)</span><br><span class="line"></span><br><span class="line">mask = <span class="keyword">lambda</span> horse: horse(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">horse(mask)</span><br></pre></td></tr></table></figure><br>让我们抛出那个熟悉的疑问句：“What would python display?”<br>这是什么，我是谁，我在哪？这是大多数人看到这道题的第一反应（包括我），短短几行代码中有嵌套，有<code>lambda</code>函数，更要命的是，它将一个名称赋予了多个含义并且来回反转运用。<br>要想得到它最终的答案，我们还是从<code>python</code>的编译器的编译规则出发。</p><h2 id="interpreter-的基础编译规则"><a href="#interpreter-的基础编译规则" class="headerlink" title="interpreter 的基础编译规则"></a>interpreter 的基础编译规则</h2><p>我们在上一篇中其实大概的提到过，interpreter在遇到函数时是怎么办的，现在我们高度总结性概括一下：<br>1.当interpreter遇到一个用户自定义的函数时（即遇见<code>def</code>时），会首先将它的名字存储起来，并且表明这个名字代表一个函数，注意<strong><em>此时编译器不会鸟函数里面到底写了啥</em></strong>。<br>2.根据第一条，因为<code>interpreter</code>完全不鸟你在函数的<code>body</code>即主体里到底写了啥，所以你在函数里面定义的函数（嵌套函数）不会被编译器像遇见的<code>def</code>函数一样保存。<br>3.<code>lambda</code>完全不用担心，因为当编译器发现它的时候，它就要被执行了（这句话你细品）。<br>4.函数的执行包括参数的输入，返回值，如果参数输入了，值还没返回，函数会等着直到值的返回。<br>5.局部变量永远都在局部环境下（上一节课说的盒子中）妄想透过这个盒子去往上一级环境。<br>6.参数是通过两级环境的通道。  </p><h2 id="我们再来看看这道可怕的题目"><a href="#我们再来看看这道可怕的题目" class="headerlink" title="我们再来看看这道可怕的题目"></a>我们再来看看这道可怕的题目</h2><p>首先我们执行第一行代码，一个名为<code>horse</code>的函数被存在了全局变量下，但是它里面是什么，还没有人知道，接着我们跳过函数主体看到了第七行，看到<code>mask</code>代表了一个<code>lambda</code>函数，函数要输入一个叫<code>horse</code>的参量，我们也把他存在全局变量下<br><img src="/2021/03/31/SICP2020-3/1.png" class><br>然后，函数被唤醒执行了！就在第九行！它执行的是<code>horse</code>函数并传递给它一个参量<code>mask</code>，是哪个<code>mask</code>？你看看现在我们有哪个<code>mask</code>在同一环境下的？没错就是那个代表<code>lambda</code>的函数，但注意，<strong><em>它没有被执行或者唤醒！</em></strong>我们如果想执行<code>lambda</code>函数应该召唤<code>mask</code>并给他一个<strong><em>参量</em></strong>我们没有给它参量，他就是被当作一个函数<code>horse</code>的参量传进函数主体中而已。记得我们的规则6吗？我们成功创建了一个环境，而<code>mask</code>由参量这个通道进入了该环境中。<br><img src="/2021/03/31/SICP2020-3/2.png" class><br>接下来我们就该看<code>horse</code>函数内部了，第二行，我们做了一个神奇的附值。在这里有必要再强调一下附值的操作规则，附值是将等号左边的值传递给右边，也就是说等号的右边是先被计算的，还记得我们多个参数附值吗，想要调换两参数的值只用到了以下代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a, b = b, a</span><br></pre></td></tr></table></figure><br>在该例子中，我们率先计算了等号右边的值，即将等号右边的名称表现为他们所代表的数值，然后再进行附值操作。回到正题第二行中的操作等于在该环境下，将<code>mask</code>这个代表<code>lambda</code>函数的值传递给了<code>horse</code>，现在我们在该环境下只要呼唤<code>horse</code>就等于呼唤<code>mask</code><br><img src="/2021/03/31/SICP2020-3/3.png" class><br>然后我们来到最最可怕的第三行。他干了什么，它重新定义了一个函数叫做<code>mask</code>且该函数的参数叫<code>horse</code>，注意！这个重新定义的函数和之前所有的值没有任何联系！<br>嘘！请安静，它依旧没有被唤醒，我们现在只是单纯定义了它，还记得我们在全局变量下定义函数会发生什么？我们只是将名称和函数联系到了一起，这样计算机在函数被执行时就知道去哪找被执行对象，我们会跳过该函数的主体，直接执行第五行。<br>与此同时发生了一件有趣的事情，在<code>f1</code>环境下，<code>mask</code>不再指代那个<code>lambda</code>函数了。一个环境下，一个名称只能指代一个东西，换位思考一下，你如果是计算机，当一个名字指代很多东西时，你当然会舍弃之前的指代关系，保留最新构建的框架。<br><img src="/2021/03/31/SICP2020-3/4.png" class><br>我们来执行第五行，它干啥了？我们的函数<code>f1</code>要返回一个值，返回的是什么？<code>horse(mask)</code>还记得<code>horse</code>在该环境下（f1）代表什么吗？是那个我们一直在提但一直没叫起来的<code>lambda</code>函数！可以叫它起床了！我们对它传递了参量<code>mask</code>，它在这环境中指代啥来着？是我们刚刚在<code>f1</code>环境中定义的新函数啊！我们创建新的环境<code>lambda</code>并把参数扔进去。注意看<code>lamnda</code>的主体，我们扔进去的参量叫什么了？答案：<code>horse</code>，该<code>horse</code>在<code>lambda</code>下指代<code>f1</code>中的新函数<code>mask</code><br><img src="/2021/03/31/SICP2020-3/5.png" class><br><img src="/2021/03/31/SICP2020-3/6.png" class><br>我们在<code>lambda</code>环境中返还的是什么？是<code>lambda(f2)</code>环境下的<code>horse(2)</code>这时发生了什么？我们把在<code>f1</code>环境下定义的新函数<code>mask</code>唤醒了并将参数2传递进去，于是我们建立了<code>mask</code>环境，该环境下函数的参量叫啥？<code>horse</code>。它等于啥？2。ok我们现在执行<code>f1</code>下<code>mask</code>的主体。<br><img src="/2021/03/31/SICP2020-3/6.png" class><br><img src="/2021/03/31/SICP2020-3/7.png" class><br><code>f3</code>环境执行，返回<code>horse</code>，我们参照构架图，该环境下<code>horse = 2</code>就是返回了2。问题来了它返回了值回哪去了？还记得规则4吗？在函数没有返回值时它一直等着，再看看我们之前唤醒的所有函数，<code>f1,f2</code>是不是都还在？回答我们最初的答案，谁叫醒的它，他就把值还到哪里去，于是<code>f2</code>的返还值为2，<code>f1</code>唤醒的<code>f2</code>，<code>f2</code>把值还给<code>f1</code>，<code>f1</code>的返还值为2。<br><img src="/2021/03/31/SICP2020-3/9.png" class><br>恭喜，题目作结。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>在解决这个问题时我们都做了些什么？最最重要的就是环境构成图的思考方式，文中所有的图像皆取自lesson8 课件我们可以看到在运行一个程序时我们到底该如何使用框架与环境这两个重要因素，去换位思考。这种思考方式无论是在写代码或是debug中都极其有用，同样的它也会在后续的学习中帮助我们理解高级函数、递归、迭代等函数构成方式，也有助于我们更快速的检查阅读代码。<br>下次在coding或者debug的时候不妨问问自己，<strong><em>当计算机运行时在想些什么？</em></strong></p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://inst.eecs.berkeley.edu/~cs61a/sp20/">https://inst.eecs.berkeley.edu/~cs61a/sp20/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Computer </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Computer </tag>
+            
+            <tag> Founctional Programming </tag>
+            
+            <tag> SICP </tag>
+            
+            <tag> python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>SICP2020-2[环境与框架特点、hw1、lab01]</title>
       <link href="2021/03/21/SICP2020-2/"/>
       <url>2021/03/21/SICP2020-2/</url>
@@ -51,11 +82,11 @@
       
         <tags>
             
-            <tag> 微积分 </tag>
-            
             <tag> 线性代数 </tag>
             
             <tag> 张量分析 </tag>
+            
+            <tag> 微积分 </tag>
             
         </tags>
       
