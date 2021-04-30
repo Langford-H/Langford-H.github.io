@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/04/27/%E5%8F%98%E5%88%86%E6%B3%95%E5%9F%BA%E7%A1%80/1.jfif">
 <meta property="article:published_time" content="2021-04-27T03:22:33.000Z">
-<meta property="article:modified_time" content="2021-04-28T02:29:41.149Z">
+<meta property="article:modified_time" content="2021-04-30T00:32:42.416Z">
 <meta property="article:author" content="Langford Huang">
 <meta property="article:tag" content="泛函">
 <meta property="article:tag" content="变分法">
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 10:29:41" itemprop="dateModified" datetime="2021-04-28T10:29:41+08:00">2021-04-28</time>
+                <time title="修改时间：2021-04-30 08:32:42" itemprop="dateModified" datetime="2021-04-30T08:32:42+08:00">2021-04-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,7 +255,7 @@ J(y(x))=\int_{x_1}^{x_2}F(x, y(x), y'(x))  \,dx</script><p>其中被积函数$F$
 <h2 id="变分"><a href="#变分" class="headerlink" title="变分"></a>变分</h2><p>我们再来解决第二个问题，函数之间的变化量可以像微积分中那样有像$dx, dy$一样的无穷小量吗，答案是肯定的。  </p>
 <h3 id="函数间的距离"><a href="#函数间的距离" class="headerlink" title="函数间的距离"></a>函数间的距离</h3><p>但在定义它之前我们先要来看看两个函数之间的距离该如何确定。我们假设有两个函数$y(x)$和$y_0(x)$，二者都在$[x_1,x_2]$上有n阶的连续导数，我们取<em>二者在0到n阶导数之中最大的差值</em>作为二者的距离，称为<em>n级距离</em>，当$n=0$时该距离被称为零级距离，我们用严格的数学公式表示它  </p>
 <script type="math/tex; mode=display">
-d_n[y(x), y_0(x)] = \mathtop{max}\limits{0 \leqslant i \leqslant n}\mathtop{max}\limits{x_1 \leqslant x \leqslant x_2} |y^{(i)}(x) - y^{(i)}_0(x)|</script><p>我们由此可以很容易得到$d_0\leqslant d_1\leqslant d_2 \cdots \leqslant d_n$<br>我们类似复变函数中的定义，得到函数类中的<em>邻域</em>，即设有一在$[a,b]$上有n阶连续函数函数$y_0$，则相应的所有在$[a,b]$内n级距离小于$\delta$的函数类（一个集合）被称为$y_0$在$[a,b]$上的n级$\delta$邻域。我们可以用数学符号将其简练的表达为</p>
+d_n[y(x), y_0(x)] = \max\limits{0 \leqslant i \leqslant n}\max\limits{x_1 \leqslant x \leqslant x_2} |y^{(i)}(x) - y^{(i)}_0(x)|</script><p>我们由此可以很容易得到$d_0\leqslant d_1\leqslant d_2 \cdots \leqslant d_n$<br>我们类似复变函数中的定义，得到函数类中的<em>邻域</em>，即设有一在$[a,b]$上有n阶连续函数函数$y_0$，则相应的所有在$[a,b]$内n级距离小于$\delta$的函数类（一个集合）被称为$y_0$在$[a,b]$上的n级$\delta$邻域。我们可以用数学符号将其简练的表达为</p>
 <script type="math/tex; mode=display">
 y(x)\in N_n[\delta, y_0(x)]</script><p>我们易得，拥有更高阶$\delta$接近度的两个函数更加接近。</p>
 <h3 id="泛函的连续"><a href="#泛函的连续" class="headerlink" title="泛函的连续"></a>泛函的连续</h3><p>当出现$\delta$时就应该警觉，因为它的出现往往暗示着无穷小量的定义，即经典的$\varepsilon-\delta$证明。（可以回想数学分析或高等数学中连续性证明）类似的，我们现在来定义<strong>泛函</strong>（注意是泛函而不是函数类）的连续。  </p>
