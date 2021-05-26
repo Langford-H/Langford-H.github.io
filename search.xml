@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>LaTex日志 5月26日 图片报错Package graphics: Division by 0.</title>
+      <link href="2021/05/27/LaTex%E6%97%A5%E5%BF%97-5%E6%9C%8826%E6%97%A5-%E5%9B%BE%E7%89%87%E6%8A%A5%E9%94%99Package-graphics-Division-by-0/"/>
+      <url>2021/05/27/LaTex%E6%97%A5%E5%BF%97-5%E6%9C%8826%E6%97%A5-%E5%9B%BE%E7%89%87%E6%8A%A5%E9%94%99Package-graphics-Division-by-0/</url>
+      
+        <content type="html"><![CDATA[<h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>使用LaTex进行图片编辑时，在语法反复检查无误，相同语法使用不同图片显示成功的情况下，针对某几张图片使用<code>\subfigure&#123;&#125;</code>命令后，编译报错，错误解释为<code>Package graphics: Division by 0</code><br><img src="/2021/05/27/LaTex%E6%97%A5%E5%BF%97-5%E6%9C%8826%E6%97%A5-%E5%9B%BE%E7%89%87%E6%8A%A5%E9%94%99Package-graphics-Division-by-0/baocuo1.png" class title="报错"><br>在使用vscode的图片预览功能时，并非正常显示图片，而是显示乱码<br><img src="/2021/05/27/LaTex%E6%97%A5%E5%BF%97-5%E6%9C%8826%E6%97%A5-%E5%9B%BE%E7%89%87%E6%8A%A5%E9%94%99Package-graphics-Division-by-0/baocuo2.png" class title="报错"><br>使用<code>\figure</code>对图片进行非拼接化排版时代码可以运行成功，但是在pdf中不会显示图片</p><h1 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h1><p>国内论坛对本问题产生原因的解释是“图片过大，超过251kb不可使用”，此为错误判断，LaTex可以放置大小为数个MB的EPS矢量图。<br>从<tex.stackexchange.com>上查询到的问题产生原因是图片本身问题，而并非<code>Tex</code>的编译问题，这与笔者重复实验得出的结论一致，但我对其观点“如果能用preview软件打开则图片没有问题，通常是储存路径产生问题”抱有疑问，本次问题编译的原图片是可以使用windows自带图片查看器查看的，笔者使用其他资源方式下载同样图片，运用相同的存储路径后编译成功，故对其储存路径说法持怀疑态度，仍有疑问需要解答。</tex.stackexchange.com></p><h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>以上问题为图片问题，更换图片下载源后编译成功</p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>stackexchange <a href="https://tex.stackexchange.com/questions/196036/odd-graphics-error-division-by-0">https://tex.stackexchange.com/questions/196036/odd-graphics-error-division-by-0</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> LaTex </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LaTex </tag>
+            
+            <tag> debug </tag>
+            
+            <tag> 日志 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>变分法基础1[变分与微分]</title>
       <link href="2021/04/27/%E5%8F%98%E5%88%86%E6%B3%95%E5%9F%BA%E7%A1%80/"/>
       <url>2021/04/27/%E5%8F%98%E5%88%86%E6%B3%95%E5%9F%BA%E7%A1%80/</url>
@@ -20,9 +49,9 @@
       
         <tags>
             
-            <tag> 泛函 </tag>
-            
             <tag> 变分法 </tag>
+            
+            <tag> 泛函 </tag>
             
         </tags>
       
@@ -225,9 +254,9 @@
       
         <tags>
             
-            <tag> Computer </tag>
-            
             <tag> Git </tag>
+            
+            <tag> Computer </tag>
             
         </tags>
       
